@@ -42,7 +42,7 @@ export default {
       }
       let result  = await this.$axios.$post("http://127.0.0.1:8000/api/user/login", param);
       if(result.status == 200) {
-        this.updateSignInState({isSignedIn: true, name: result.name})
+        this.updateSignInState({isSignedIn: true, name: result.name, apiToken: result.api_token})
         this.$router.push("/");
       } else {
         this.password = "";

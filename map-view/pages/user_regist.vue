@@ -21,9 +21,11 @@
 
 <script>
 import HeaderComponent from '~/components/HeaderComponent.vue'
+import api_mixin from '~/mixins/api_mixin.js'
 import { mapState, mapActions } from 'vuex'
 
 export default {
+  mixins: [api_mixin],
   components: {
     HeaderComponent
   },
@@ -73,7 +75,7 @@ export default {
   },
   async mounted() {
     if(this.isSignedIn) {
-      let result  = await this.$axios.$get("http://127.0.0.1:8000/api/user/user_info");
+      let result  = await this.$axios.$get("http://127.0.0.1:8000/api/user/user_info", this.getAuthHeader());
       if(result.status == 200) {
         this.user_name = result.name;
         this.email = result.email;

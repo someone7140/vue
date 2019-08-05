@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="yahoo_map" style="width:400px; height:300px"></div>
+    <div id="yahoo_map" style="width:600px; height:500px"></div>
     <div>
       {{latitude}}、{{longitude}}
     </div>

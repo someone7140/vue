@@ -10,7 +10,13 @@
       パスワード<br/>
       <input type="password" v-model="password" size=33/><br/>
       <input type="password" v-model="password_confirm" size=33/><br/>
-      <input type="button" value="ユーザ登録" v-bind:disabled="!isPush" @click="pushBtn()"/><br/>
+      アイコン画像<br/>
+      <input type="file" name="image_file" @change="onUpload()"/><br/>
+      <div v-if="upload_success">
+        <br/><img v-bind:src=img_src width=150 height=150>
+      </div>
+      <br/>
+      <input type="button" v-bind:value=button_name v-bind:disabled="!isPush" @click="pushBtn()"/><br/>
       {{message}}
     </div>
     <div v-if="regist_success">
@@ -36,6 +42,10 @@ export default {
       password: "",
       password_confirm: "",
       regist_success: false,
+      img_src:"",
+      upload_success: false,
+      button_name: "",
+      image_file: "",
       message: ""
     }
   },
@@ -43,8 +53,10 @@ export default {
     isPush: function () {
       return (
         this.user_name.length > 0 && this.email.length > 0 &&
-        this.password.length > 5 && this.password_confirm.length > 5 &&
-        this.password == this.password_confirm
+        (this.isSignedIn || (!this.isSignedIn &&
+          this.password.length > 5 && this.password_confirm.length > 5 &&
+          this.password == this.password_confirm)
+        )
       );
     },
     ...mapState('user', ['isSignedIn', 'name'])
@@ -60,29 +72,45 @@ export default {
       }
       let result;
       if(this.isSignedIn) {
-        result  = await this.$axios.$post("http://127.0.0.1:8000/api/user/update", param);
+        result  = await this.$axios.$post("http://127.0.0.1:8000/api/user/update", param, this.getAuthHeader());
       } else {
         result  = await this.$axios.$post("http://127.0.0.1:8000/api/user/create", param);
       }
       if(result.status == 200) {
         this.regist_success = true;
+        
       } else {
         this.password = "";
         this.password_confirm = "";        
         this.message = result.message;
       }
+    },
+    onUpload() {
+      this.image_file = event.target.files[0];
+      // FileReaderオブジェクトを使ってファイル読み込み
+      var reader = new FileReader();
+      // ファイル読み込みに成功したときの処理
+      reader.onload = function() {
+        this.img_src = reader.result;
+        this.upload_success = true;
+      }.bind(this)
+      // ファイル読み込みを実行
+      reader.readAsDataURL(this.image_file);
     }
   },
   async mounted() {
     if(this.isSignedIn) {
+      this.button_name = "更新する"
       let result  = await this.$axios.$get("http://127.0.0.1:8000/api/user/user_info", this.getAuthHeader());
       if(result.status == 200) {
         this.user_name = result.name;
         this.email = result.email;
       } else {
-        this.updateSignInState({isSignedIn: false, name: ""})
+        this.updateSignInState({isSignedIn: false, name: "", apiToken: ""})
         this.$router.push("/");
       }
+    } else {
+        this.button_name = "ユーザ登録";
     }
   }
 }

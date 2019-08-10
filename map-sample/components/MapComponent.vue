@@ -13,8 +13,8 @@
 export default {
   data() {
     return {
-      latitude: 35.66572,
-      longitude: 139.73100,
+      latitude: 35.676684,
+      longitude: 139.7370753,
       address: "",
       message: "",
     }

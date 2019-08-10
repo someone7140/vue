@@ -45,7 +45,7 @@ export default {
       img_src:"",
       upload_success: false,
       button_name: "",
-      image_file: "",
+      image_file: undefined,
       message: ""
     }
   },
@@ -64,15 +64,31 @@ export default {
   methods: {
     ...mapActions('user', ['updateSignInState']),
     async pushBtn() {
-      let param = {
-        name: this.user_name,
-        email: this.email,
-        password: this.password,
-        password_confirm: this.password_confirm
-      }
+      let param;
       let result;
+      if (this.image_file) {
+        param = new FormData
+        param.append("name", this.user_name);
+        param.append("email", this.email);
+        param.append("password", this.password);
+        param.append("password_confirm", this.password_confirm);
+        param.append("image_file", this.image_file);
+      } else {
+        param = {
+          name: this.user_name,
+          email: this.email,
+          password: this.password,
+          password_confirm: this.password_confirm
+        };
+      }
       if(this.isSignedIn) {
-        result  = await this.$axios.$post("http://127.0.0.1:8000/api/user/update", param, this.getAuthHeader());
+        let headers;
+        if (this.image_file) {
+          headers = this.getAuthHeader(this.getContentHeader());
+        } else {
+          headers = this.getAuthHeader()
+        }
+        result  = await this.$axios.$post("http://127.0.0.1:8000/api/user/update", param, headers);
       } else {
         result  = await this.$axios.$post("http://127.0.0.1:8000/api/user/create", param);
       }
@@ -86,16 +102,21 @@ export default {
       }
     },
     onUpload() {
-      this.image_file = event.target.files[0];
-      // FileReaderオブジェクトを使ってファイル読み込み
-      var reader = new FileReader();
-      // ファイル読み込みに成功したときの処理
-      reader.onload = function() {
-        this.img_src = reader.result;
-        this.upload_success = true;
-      }.bind(this)
-      // ファイル読み込みを実行
-      reader.readAsDataURL(this.image_file);
+      if (event.target.files.length > 0) {
+        this.image_file = event.target.files[0];
+        // FileReaderオブジェクトを使ってファイル読み込み
+        var reader = new FileReader();
+        // ファイル読み込みに成功したときの処理
+        reader.onload = function() {
+          this.img_src = reader.result;
+          this.upload_success = true;
+        }.bind(this)
+        // ファイル読み込みを実行
+        reader.readAsDataURL(this.image_file);
+      } else {
+        this.image_file = undefined
+        this.upload_success = false;
+      }
     }
   },
   async mounted() {

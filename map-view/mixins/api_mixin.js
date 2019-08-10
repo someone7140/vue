@@ -5,8 +5,17 @@ export default {
     ...mapState('user', ['apiToken'])
   },
   methods: {
-    getAuthHeader() {
-      return { headers: { 'Authorization': 'Bearer ' + this.apiToken } };
-    }
+    getAuthHeader(headersObj) {
+      let authHeader = 'Bearer ' + this.apiToken
+      if (headersObj) {
+        headersObj.headers['Authorization'] = authHeader;
+        return headersObj
+      } else {
+        return { headers: {'Authorization' : authHeader} };
+      }
+    },
+    getContentHeader() {
+      return { headers: {'Content-Type': 'multipart/form-data'} };
+    },
   }
 }

@@ -24,7 +24,7 @@
         </slide>
       </td>
       <td>
-        <nuxt-link to="/">ニュースコメント</nuxt-link>
+        <nuxt-link to="/">RANKNESS</nuxt-link>
         <span class="menu">
           <input type="text" v-model="searchWord" placeholder="ニュース検索" name="searchWord" />
           <button type="button" @click="searchNews">
@@ -45,7 +45,12 @@
             <template v-slot:button-content>
               <span v-if="userInfo.user_category == 'student'">{{ userInfo.name }}&nbsp;</span>
               <span v-if="userInfo.user_category != 'student'">{{ userInfo.company_name }}&nbsp;</span>
-              <img :src="userInfo.image_url" width="50" height="50" />
+              <span v-if="userInfo.image_url">
+                <img :src="userInfo.image_url" width="50" height="50" />
+              </span>
+              <span v-if="!userInfo.image_url">
+                <img src="~assets/default_icon.png" width="50" height="50" />
+              </span>
             </template>
             <span v-if="userInfo.user_category == 'student'">
               <b-dropdown-item to="/account/student_profile_view">プロフィール参照</b-dropdown-item>

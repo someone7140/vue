@@ -4,6 +4,9 @@
       <header-component />
       <div>Facebookでログイン</div>
       <facebook-auth-component :authPurpose="authPurpose" />
+      <br />
+      <div>メールアドレスでログイン</div>
+      <mail-auth-component :authPurpose="authPurpose" />
       <flash-message-display-component />
     </div>
   </div>
@@ -14,6 +17,7 @@ import api_mixin from "~/mixins/api_mixin.js";
 import FacebookAuthComponent from "~/components/auth/FacebookAuthComponent.vue";
 import FlashMessageDisplayComponent from "~/components/common/FlashMessageDisplayComponent.vue";
 import HeaderComponent from "~/components/common/HeaderComponent.vue";
+import MailAuthComponent from "~/components/auth/MailAuthComponent.vue";
 import { mapState, mapActions } from "vuex";
 
 export default {
@@ -21,7 +25,8 @@ export default {
   components: {
     FacebookAuthComponent,
     FlashMessageDisplayComponent,
-    HeaderComponent
+    HeaderComponent,
+    MailAuthComponent
   },
   data() {
     return {

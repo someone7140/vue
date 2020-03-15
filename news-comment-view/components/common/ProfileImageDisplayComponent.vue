@@ -1,6 +1,11 @@
 <template>
   <div>
-    <img :src="imageUrl" class="profile" :style="styles" />
+    <span v-if="imageUrl">
+      <img :src="imageUrl" class="profile" :style="styles" />
+    </span>
+    <span v-if="!imageUrl">
+      <img src="~assets/default_icon.png" class="profile" :style="styles" />
+    </span>
   </div>
 </template>
 <script>

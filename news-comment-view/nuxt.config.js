@@ -1,6 +1,9 @@
 import path from "path";
 import fs from "fs";
 
+const environment = process.env.NODE_ENV || "local";
+const envSet = require(`./env.${environment}.js`);
+
 export default {
   mode: "spa",
   /*
@@ -68,5 +71,6 @@ export default {
       ),
       cert: fs.readFileSync(path.resolve("server/localhost", "localhost.pem"))
     }
-  }
+  },
+  env: envSet
 };

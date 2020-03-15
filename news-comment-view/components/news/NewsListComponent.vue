@@ -4,8 +4,8 @@
       <news :news="news" />
     </div>
     <infinite-loading ref="infiniteLoading" spinner="spiral" @infinite="infiniteHandler">
-      <span slot="no-more">結果は以上です</span>
-      <span slot="no-results">ニュースの取得中です</span>
+      <span slot="no-more">&nbsp;</span>
+      <span slot="no-results">&nbsp;</span>
     </infinite-loading>
   </div>
 </template>

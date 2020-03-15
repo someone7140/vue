@@ -4,7 +4,11 @@
       <header-component />
       <div v-if="!(userCategory == 'company')">会員登録（学生様用）</div>
       <div v-if="userCategory == 'company'">会員登録（企業様用）</div>
+      <div>[Facebookで登録]</div>
       <facebook-auth-component :authPurpose="authPurpose" :userCategory="userCategory" />
+      <br />
+      <div>[メールアドレスで登録]</div>
+      <mail-auth-component :authPurpose="authPurpose" :userCategory="userCategory" />
     </div>
   </div>
 </template>
@@ -13,13 +17,15 @@
 import api_mixin from "~/mixins/api_mixin.js";
 import FacebookAuthComponent from "~/components/auth/FacebookAuthComponent.vue";
 import HeaderComponent from "~/components/common/HeaderComponent.vue";
+import MailAuthComponent from "~/components/auth/MailAuthComponent.vue";
 import { mapState, mapActions } from "vuex";
 
 export default {
   mixins: [api_mixin],
   components: {
     FacebookAuthComponent,
-    HeaderComponent
+    HeaderComponent,
+    MailAuthComponent
   },
   data() {
     return {

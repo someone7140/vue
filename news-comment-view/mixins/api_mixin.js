@@ -1,7 +1,7 @@
 export default {
   methods: {
     getApiDomain() {
-      return "http://127.0.0.1:3000/";
+      return process.env.API_DOMAIN;
     },
     getReponseApi(axios, path) {
       var result = undefined;

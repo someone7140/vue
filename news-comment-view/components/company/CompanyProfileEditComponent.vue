@@ -28,7 +28,7 @@
       </table>
       <br />
     </div>
-    <div>
+    <div v-if="company != undefined || userInfo.auth_category != 'email'">
       【メールアドレス】
       <br />
       <input type="email" v-model="email" placeholder="メールアドレス" name="email" />
@@ -58,7 +58,7 @@
       <br />
       <input type="text" v-model="url" placeholder="ホームページURL" name="url" />
     </div>
-    <div>
+    <div v-if="company != undefined || userInfo.auth_category != 'email'">
       【パスワード】
       <br />
       <input type="password" v-model="password" placeholder="6文字以上で入力" name="password" />
@@ -172,7 +172,7 @@ export default {
             this.messageList.push("再入力されたパスワードが異なります");
           }
         }
-      } else {
+      } else if (this.userInfo.auth_category != "email") {
         if (!this.password || this.password.length < 6) {
           this.messageList.push("パスワードを6文字以上で入力してください");
         }
@@ -215,22 +215,13 @@ export default {
         }
         var response = undefined;
         let headers = this.image_file ? "multipart/form-data" : undefined;
-        // 編集の時
-        if (this.company != undefined) {
-          response = await this.postApi(
-            this.$axios,
-            "editCompanyProfile",
-            postData,
-            headers
-          );
-        } else {
-          response = await this.postApi(
-            this.$axios,
-            "registCompanyProfile",
-            postData,
-            headers
-          );
-        }
+
+        response = await this.postApi(
+          this.$axios,
+          "editCompanyProfile",
+          postData,
+          headers
+        );
         if (response.status == 200) {
           // storeのユーザ情報の更新
           this.updateUserInfo({ userInfo: response.data });
@@ -258,6 +249,17 @@ export default {
             });
             this.$router.push({ path: "/" });
           }
+        } else if (response.status == 202) {
+          this.updateFlashMessageDisp({
+            flashMessageDisp: {
+              title: "登録完了",
+              message:
+                "メールアドレスの変更手続きがありますので、変更後のメールアドレスにてメールをご確認ください。",
+              position: "right bottom",
+              result: "success",
+              watchFlg: true
+            }
+          });
         } else {
           this.messageList.push(
             "登録に失敗しました。メールアドレスがすでに登録済みでないか確認してください"

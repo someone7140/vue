@@ -168,6 +168,7 @@ export default {
       if (response.status == 200) {
         this.isFacebookAuth = true;
         this.facebookInfo.user_id = response.data.user_id;
+        this.facebookInfo.auth_category = "facebook";
         this.updateUserInfo({ userInfo: this.facebookInfo });
       } else if (response.status == 403) {
         this.errorMessage = "すでに会員登録済みです。";

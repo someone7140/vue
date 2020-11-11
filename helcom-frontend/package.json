@@ -1,0 +1,34 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "local": "cross-env NODE_ENV=\"local\" nuxt",
+    "local_generate": "cross-env NODE_ENV=\"local\" nuxt generate",
+    "staging": "cross-env NODE_ENV=\"staging\" nuxt generate",
+    "production": "cross-env NODE_ENV=\"production\" nuxt generate",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "export": "nuxt export",
+    "serve": "nuxt serve"
+  },
+  "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^5.14.0",
+    "@nuxtjs/axios": "^5.12.0",
+    "@smartweb/vue-flash-message": "^0.6.4",
+    "bootstrap": "^4.5.0",
+    "bootstrap-vue": "^2.15.0",
+    "cross-env": "^7.0.2",
+    "firebase": "^7.19.1",
+    "nuxt": "^2.13.0",
+    "nuxt-fontawesome": "^0.4.0",
+    "vee-validate": "^3.3.7",
+    "vue-burger-menu": "^2.0.5",
+    "vue-infinite-loading": "^2.4.5",
+    "vue-js-modal": "^2.0.0-rc.6",
+    "vue-tabs-with-active-line": "^1.2.6",
+    "vuex-persistedstate": "^3.0.1"
+  },
+  "devDependencies": {}
+}

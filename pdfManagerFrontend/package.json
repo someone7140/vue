@@ -1,0 +1,33 @@
+{
+  "name": "pdf_manager",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=\"local\" nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/auth-next": "5.0.0-1624817847.21691f1",
+    "@nuxtjs/axios": "^5.13.6",
+    "bootstrap": "^4.6.0",
+    "bootstrap-vue": "^2.21.2",
+    "core-js": "^3.17.3",
+    "cross-env": "^7.0.3",
+    "nuxt": "^2.15.8",
+    "vue-google-oauth2": "^1.5.8",
+    "vue-toastification": "^1.7.11",
+    "vue-virtual-scroll-list": "^2.3.3",
+    "vuex-persistedstate": "^4.0.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/dotenv": "^1.4.1",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.1",
+    "eslint-plugin-vue": "^7.17.0",
+    "pdfjs-dist": "2.6.347",
+    "prettier": "^2.4.1"
+  }
+}

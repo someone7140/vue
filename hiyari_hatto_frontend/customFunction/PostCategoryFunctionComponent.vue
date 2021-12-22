@@ -1,0 +1,63 @@
+<script>
+export default function usePostCategoryFunction() {
+  const $config = useRuntimeConfig();
+
+  // カテゴリーの追加
+  async function careateCategory(name) {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      return undefined;
+    }
+    try {
+      const url = $config.API_HOST + "/hiyariHatto/createCategory";
+      const params = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify({ name: name }),
+      };
+      const res = await fetch(url, params);
+      if (res.ok) {
+        return true;
+      }
+    } catch (_) {
+      return undefined;
+    }
+    return undefined;
+  }
+
+  // カテゴリー取得
+  async function getCategories() {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      return undefined;
+    }
+    try {
+      const url = $config.API_HOST + "/hiyariHatto/listCategory";
+      const params = {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      };
+      const res = await fetch(url, params);
+      if (res.ok) {
+        return await res.json();
+      }
+    } catch (_) {
+      return undefined;
+    }
+    return undefined;
+  }
+
+  return {
+    careateCategory,
+    getCategories,
+  };
+}
+</script>

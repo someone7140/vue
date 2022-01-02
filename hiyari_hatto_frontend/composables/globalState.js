@@ -5,9 +5,3 @@ export const useUserState = () => {
     return { user: undefined };
   });
 };
-
-export const useMenuState = () => {
-  return useState("menu", () => {
-    return { menu: "top" };
-  });
-};

@@ -5,12 +5,7 @@
     </div>
     <div v-if="!state.loadingFlag">
       <HeaderComponent />
-      <div v-if="userState.user">
-        <PostTopComponent />
-      </div>
-      <div v-if="!userState.user">
-        <LoginComponent :setUser="setUser" />
-      </div>
+      <CategoryTopComponent />
     </div>
   </v-app>
 </template>
@@ -22,7 +17,6 @@ import "vue-loading-overlay/dist/vue-loading.css";
 
 import CategoryTopComponent from "../components/category/CategoryTopComponent";
 import HeaderComponent from "../components/common/HeaderComponent";
-import LoginComponent from "../components/auth/LoginComponent";
 import useAuthFunction from "../customFunction/AuthFunctionComponent";
 
 export default defineComponent({
@@ -30,7 +24,6 @@ export default defineComponent({
     CategoryTopComponent,
     HeaderComponent,
     Loading,
-    LoginComponent,
   },
   async setup() {
     const userState = useUserState();
@@ -40,18 +33,21 @@ export default defineComponent({
 
     const { getUserFromToken } = useAuthFunction();
     if (process.client) {
-      const userFromToken = await getUserFromToken(window.localStorage);
-      userState.value = {
-        user: userFromToken,
-      };
-      state.loadingFlag = false;
+      if (!userState.value.user) {
+        const userFromToken = await getUserFromToken(window.localStorage);
+        if (userFromToken) {
+          userState.value = {
+            user: userFromToken,
+          };
+          state.loadingFlag = false;
+        } else {
+          window.location.href = "/";
+        }
+      } else {
+        state.loadingFlag = false;
+      }
     }
-    const setUser = (user) => {
-      userState.value = {
-        user: user,
-      };
-    };
-    return { state, userState, setUser };
+    return { state };
   },
 });
 </script>

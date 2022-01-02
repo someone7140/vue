@@ -8,7 +8,6 @@
       <div v-if="!state.errorFlag && !state.zeroFlag">
         <div style="min-width: 350px; max-width: 700px">
           <CategoryRegisterDialogComponent
-            :categoryDetail="state.categoryDetail"
             :reloadCategories="reloadCategories"
           />
         </div>
@@ -18,16 +17,10 @@
           v-for="displayCategory in state.displayCategories"
           :key="displayCategory.id"
         >
-          <v-card class="card">
-            <v-list-item-title class="card-title ml-4 mt-2">
-              {{ displayCategory.name }}
-            </v-list-item-title>
-            <v-list-item-subtitle class="ml-6 mt-4"
-              >{{
-                getFormatDateFromDateStr(displayCategory.registerDateTime)
-              }}登録</v-list-item-subtitle
-            >
-          </v-card>
+          <CategoryCardComponent
+            :displayCategory="displayCategory"
+            :reloadCategories="reloadCategories"
+          />
         </div>
         <InfiniteLoading
           :displayCategories="state.displayCategories"
@@ -46,17 +39,19 @@
 </template>
 
 <script>
-import { defineComponent, reactive } from "vue";
+import { defineComponent, nextTick, reactive } from "vue";
 import InfiniteLoading from "v3-infinite-loading";
 import Loading from "vue-loading-overlay";
 import "v3-infinite-loading/lib/style.css";
 
+import CategoryCardComponent from "./CategoryCardComponent";
 import CategoryRegisterDialogComponent from "./CategoryRegisterDialogComponent";
 import useDateFunction from "../../customFunction/DateFunctionComponent";
 import usePostCategoryFunction from "../../customFunction/PostCategoryFunctionComponent";
 
 export default defineComponent({
   components: {
+    CategoryCardComponent,
     CategoryRegisterDialogComponent,
     InfiniteLoading,
     Loading,
@@ -94,8 +89,7 @@ export default defineComponent({
     };
 
     const reloadCategories = async () => {
-      state.allCategories = await getCategories();
-      state.displayCategories = getAddDisplayCategory(0);
+      window.location.href = "/category";
     };
 
     const load = async ($state) => {
@@ -120,7 +114,12 @@ export default defineComponent({
 
     initCategories();
 
-    return { state, getFormatDateFromDateStr, load, reloadCategories };
+    return {
+      state,
+      getFormatDateFromDateStr,
+      load,
+      reloadCategories,
+    };
   },
 });
 </script>
@@ -128,13 +127,5 @@ export default defineComponent({
 <style scoped>
 .error {
   color: red;
-}
-.card {
-  height: 150px;
-  margin-bottom: 30px;
-}
-.card-title {
-  height: 25px;
-  font-size: 1.5em;
 }
 </style>

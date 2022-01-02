@@ -29,6 +29,60 @@ export default function usePostCategoryFunction() {
     return undefined;
   }
 
+  // カテゴリーの編集
+  async function editCategory(id, name) {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      return undefined;
+    }
+    try {
+      const url = $config.API_HOST + "/hiyariHatto/updateCategory";
+      const params = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify({ id: id, name: name }),
+      };
+      const res = await fetch(url, params);
+      if (res.ok) {
+        return true;
+      }
+    } catch (_) {
+      return undefined;
+    }
+    return undefined;
+  }
+
+  // カテゴリーの削除
+  async function deleteCategory(id) {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      return undefined;
+    }
+    try {
+      const url = $config.API_HOST + "/hiyariHatto/deleteCategory";
+      const params = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify({ id: id }),
+      };
+      const res = await fetch(url, params);
+      if (res.ok) {
+        return true;
+      }
+    } catch (_) {
+      return undefined;
+    }
+    return undefined;
+  }
+
   // カテゴリー取得
   async function getCategories() {
     const token = localStorage.getItem("authToken");
@@ -57,6 +111,8 @@ export default function usePostCategoryFunction() {
 
   return {
     careateCategory,
+    editCategory,
+    deleteCategory,
     getCategories,
   };
 }

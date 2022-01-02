@@ -1,9 +1,11 @@
 <template>
-  <v-btn rounded color="primary" @click="showDialog">カテゴリー登録</v-btn>
+  <v-btn rounded color="primary" @click="showDialog">{{
+    categoryDetail ? "カテゴリー編集" : "カテゴリー登録"
+  }}</v-btn>
   <v-dialog v-model="state.showDialog" persistent>
     <div class="justify-center">
       <v-card class="dialogCard">
-        <b>カテゴリー登録</b>
+        <b>{{ categoryDetail ? "カテゴリー編集" : "カテゴリー登録" }}</b>
         <br />
         <br />
         <span class="error">{{ nameError }}</span>
@@ -43,6 +45,7 @@ export default defineComponent({
     const app = getCurrentInstance();
     const root = app.appContext.config.globalProperties;
     const props = app.props;
+    const categoryDetail = props.categoryDetail;
 
     // 入力フォームの設定
     const categoryRegisterSchema = {
@@ -80,28 +83,35 @@ export default defineComponent({
       root.$toast.error("カテゴリーの登録に失敗しました");
     };
 
+    if (categoryDetail) {
+      name.value = categoryDetail.name;
+    }
+
     async function onSubmit() {
       const varidateResult = await formContext.validate();
       if (varidateResult) {
-        const { careateCategory } = usePostCategoryFunction();
+        const { careateCategory, editCategory } = usePostCategoryFunction();
         try {
-          const result = await careateCategory(name.value);
+          const result = await (categoryDetail
+            ? editCategory(categoryDetail.id, name.value)
+            : careateCategory(name.value));
 
           if (result) {
             successRegisterDisplay();
-            state.showDialog = false;
             await props.reloadCategories();
+            state.showDialog = false;
           } else {
             errorRegisterDisplay();
           }
         } catch (e) {
-          console.log(e);
           errorRegisterDisplay();
         }
       }
     }
     const boundOnSubmit = onSubmit.bind(this);
+
     return {
+      categoryDetail,
       nameValue,
       nameError,
       state,

@@ -32,11 +32,9 @@
               </v-list-item>
               <v-list-item>
                 <v-list-item-title>
-                  <v-list-item-title>
-                    <div @click="transferCategory" role="button">
-                      カテゴリー管理
-                    </div>
-                  </v-list-item-title></v-list-item-title
+                  <div @click="transferCategory" role="button">
+                    カテゴリー管理
+                  </div></v-list-item-title
                 >
               </v-list-item>
               <v-list-item>
@@ -78,7 +76,6 @@ export default defineComponent({
     const rootContext = app.appContext.config.globalProperties;
 
     const userState = useUserState();
-    const menuState = useMenuState();
 
     const state = reactive({
       showMenu: true,
@@ -91,26 +88,15 @@ export default defineComponent({
         user: undefined,
       };
       rootContext.$toast.success("ログアウトしました");
+      rootContext.$router.push("/");
     };
 
     const transferTop = async () => {
-      menuState.value = {
-        menu: "top",
-      };
-      state.showMenu = false;
-      const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-      await _sleep(0.1);
-      state.showMenu = true;
+      rootContext.$router.push("/");
     };
 
     const transferCategory = async () => {
-      menuState.value = {
-        menu: "category",
-      };
-      state.showMenu = false;
-      const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-      await _sleep(0.1);
-      state.showMenu = true;
+      rootContext.$router.push("/category");
     };
 
     return { userState, state, logout, transferTop, transferCategory };

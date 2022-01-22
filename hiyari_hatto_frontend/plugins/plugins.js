@@ -127,6 +127,7 @@ import {
 } from "vuetify/components";
 import Toaster from "@meforma/vue-toaster";
 import MdiIcon from "@mdi/font/css/materialdesignicons.css";
+import VCalendar from "v-calendar";
 
 export default defineNuxtPlugin((nuxtApp) => {
   const $config = useRuntimeConfig();
@@ -265,4 +266,5 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(vuetify);
   nuxtApp.vueApp.use(Toaster);
   nuxtApp.vueApp.use(MdiIcon);
+  nuxtApp.vueApp.use(VCalendar);
 });

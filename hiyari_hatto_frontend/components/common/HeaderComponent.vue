@@ -5,6 +5,7 @@
       color="blue-lighten-5"
       elevate-on-scroll
       scroll-target="#scrolling-techniques-7"
+      style="position: fixed; z-index: 999"
     >
       <v-spacer />
       <v-row style="min-width: 300px; max-width: 800px">

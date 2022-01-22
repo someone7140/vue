@@ -6,6 +6,7 @@ export default defineNuxtConfig({
   build: {
       transpile: ['vuetify']
   },
+  ssr: false,
   publicRuntimeConfig: {
     API_HOST: process.env.NODE_ENV === "development" ? "http://localhost:9000" : "http://example.com",
     GOOGLE_CLIENT_ID: "client_id"

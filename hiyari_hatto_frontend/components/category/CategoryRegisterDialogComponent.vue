@@ -2,7 +2,7 @@
   <v-btn rounded color="primary" @click="showDialog">{{
     categoryDetail ? "カテゴリー編集" : "カテゴリー登録"
   }}</v-btn>
-  <v-dialog v-model="state.showDialog" persistent>
+  <v-dialog v-model="state.showDialog">
     <div class="justify-center">
       <v-card class="dialogCard">
         <b>{{ categoryDetail ? "カテゴリー編集" : "カテゴリー登録" }}</b>
@@ -13,13 +13,14 @@
           v-model="nameValue"
           label="カテゴリー名"
           class="categryName ml-2"
+          data-vv-validate-on="change"
         ></v-text-field>
         <v-card-actions>
           <div class="text-center">
             <v-btn
-              class="ml-12"
+              class="ml-6"
               type="submit"
-              color="primary"
+              color="#98fb98"
               @click="boundOnSubmit"
               >登録する</v-btn
             >
@@ -37,6 +38,8 @@
 <script>
 import { defineComponent, getCurrentInstance } from "vue";
 import { useField, useForm } from "vee-validate";
+import * as yup from "yup";
+
 import usePostCategoryFunction from "../../customFunction/PostCategoryFunctionComponent";
 
 export default defineComponent({
@@ -48,11 +51,10 @@ export default defineComponent({
     const categoryDetail = props.categoryDetail;
 
     // 入力フォームの設定
-    const categoryRegisterSchema = {
-      name(value) {
-        return value ? true : "カテゴリー名は必須です";
-      },
-    };
+    const categoryRegisterSchema = yup.object({
+      name: yup.string().required("カテゴリー名は必須項目です"),
+    });
+
     const formContext = useForm({
       validationSchema: categoryRegisterSchema,
     });
@@ -89,7 +91,7 @@ export default defineComponent({
 
     async function onSubmit() {
       const varidateResult = await formContext.validate();
-      if (varidateResult) {
+      if (varidateResult.valid) {
         const { careateCategory, editCategory } = usePostCategoryFunction();
         try {
           const result = await (categoryDetail

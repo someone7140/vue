@@ -4,32 +4,46 @@
       <div v-if="state.errorFlag">
         <span class="error">カテゴリーが取得できませんでした</span>
       </div>
-      <div v-if="state.zeroFlag">カテゴリーを登録してください</div>
-      <div v-if="!state.errorFlag && !state.zeroFlag">
-        <div style="min-width: 350px; max-width: 700px">
-          <CategoryRegisterDialogComponent
-            :reloadCategories="reloadCategories"
-          />
-        </div>
-        <br />
-        <br />
+      <div v-if="!state.errorFlag">
         <div
-          v-for="displayCategory in state.displayCategories"
-          :key="displayCategory.id"
+          style="
+            min-width: 350px;
+            max-width: 700px;
+            position: fixed;
+            z-index: 10;
+            background-color: white;
+            top: 64px;
+          "
         >
-          <CategoryCardComponent
-            :displayCategory="displayCategory"
-            :reloadCategories="reloadCategories"
-          />
+          <div class="mt-4">
+            <CategoryRegisterDialogComponent
+              :reloadCategories="reloadCategories"
+            />
+          </div>
         </div>
-        <InfiniteLoading
-          :displayCategories="state.displayCategories"
-          @infinite="load"
-        >
-          <template #complete>
-            <span></span>
-          </template>
-        </InfiniteLoading>
+        <br />
+        <br />
+        <br />
+        <div v-if="state.zeroFlag">登録されているカテゴリーはありません</div>
+        <div v-if="!state.zeroFlag">
+          <div
+            v-for="displayCategory in state.displayCategories"
+            :key="displayCategory.id"
+          >
+            <CategoryCardComponent
+              :displayCategory="displayCategory"
+              :reloadCategories="reloadCategories"
+            />
+          </div>
+          <InfiniteLoading
+            :displayCategories="state.displayCategories"
+            @infinite="load"
+          >
+            <template #complete>
+              <span></span>
+            </template>
+          </InfiniteLoading>
+        </div>
       </div>
     </div>
     <div v-if="state.loadingFlag">
@@ -39,7 +53,7 @@
 </template>
 
 <script>
-import { defineComponent, nextTick, reactive } from "vue";
+import { defineComponent, reactive } from "vue";
 import InfiniteLoading from "v3-infinite-loading";
 import Loading from "vue-loading-overlay";
 import "v3-infinite-loading/lib/style.css";

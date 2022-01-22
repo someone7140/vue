@@ -12,14 +12,17 @@
   "dependencies": {
     "@mdi/font": "^6.5.95",
     "@meforma/vue-toaster": "^1.2.2",
+    "@vueform/multiselect": "^2.3.1",
     "dayjs": "^1.10.7",
     "fibers": "^5.0.0",
     "sass": "^1.44.0",
     "sass-loader": "^10.2.0",
+    "v-calendar": "^3.0.0-alpha.6",
     "v3-infinite-loading": "^1.0.1",
     "vee-validate": "^4.5.7",
     "vue-loading-overlay": "^4.0.4",
     "vue3-google-oauth2": "^1.0.6",
-    "vuetify": "^3.0.0-alpha.11"
+    "vuetify": "^3.0.0-alpha.11",
+    "yup": "^0.32.11"
   }
 }

@@ -10,7 +10,7 @@
     >
     <v-card-actions>
       <v-row class="justify-center mt-1">
-        <v-col class="ml-6">
+        <v-col class="ml-2">
           <CategoryRegisterDialogComponent
             :categoryDetail="displayCategory"
             :reloadCategories="reloadCategories"

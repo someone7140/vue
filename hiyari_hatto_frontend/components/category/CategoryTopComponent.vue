@@ -1,10 +1,10 @@
 <template>
-  <div class="d-flex justify-center">
-    <div v-if="!state.loadingFlag">
-      <div v-if="state.errorFlag">
+  <div class="d-flex justify-center categoryList">
+    <template v-if="!state.loadingFlag">
+      <template v-if="state.errorFlag">
         <span class="error">カテゴリーが取得できませんでした</span>
-      </div>
-      <div v-if="!state.errorFlag">
+      </template>
+      <template v-if="!state.errorFlag">
         <div
           style="
             min-width: 350px;
@@ -24,8 +24,16 @@
         <br />
         <br />
         <br />
-        <div v-if="state.zeroFlag">登録されているカテゴリーはありません</div>
-        <div v-if="!state.zeroFlag">
+        <template v-if="state.zeroFlag"
+          >登録されているカテゴリーはありません</template
+        >
+        <br />
+        <br />
+        <br />
+        <div v-if="!state.zeroFlag" class="categoryList">
+          <br />
+          <br />
+          <br />
           <div
             v-for="displayCategory in state.displayCategories"
             :key="displayCategory.id"
@@ -44,11 +52,11 @@
             </template>
           </InfiniteLoading>
         </div>
-      </div>
-    </div>
-    <div v-if="state.loadingFlag">
+      </template>
+    </template>
+    <template v-if="state.loadingFlag">
       <loading v-model:active="state.loadingFlag" :can-cancel="false" />
-    </div>
+    </template>
   </div>
 </template>
 
@@ -60,7 +68,6 @@ import "v3-infinite-loading/lib/style.css";
 
 import CategoryCardComponent from "./CategoryCardComponent";
 import CategoryRegisterDialogComponent from "./CategoryRegisterDialogComponent";
-import useDateFunction from "../../customFunction/DateFunctionComponent";
 import usePostCategoryFunction from "../../customFunction/PostCategoryFunctionComponent";
 
 export default defineComponent({
@@ -124,13 +131,10 @@ export default defineComponent({
       }
     };
 
-    const { getFormatDateFromDateStr } = useDateFunction();
-
     initCategories();
 
     return {
       state,
-      getFormatDateFromDateStr,
       load,
       reloadCategories,
     };

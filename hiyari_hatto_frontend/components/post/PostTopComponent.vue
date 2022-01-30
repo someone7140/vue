@@ -22,16 +22,33 @@
             />
           </div>
         </div>
-        <br />
-        <br />
-        <br />
-        <div v-if="state.zeroFlag">登録されている投稿はありません</div>
-        <div v-if="!state.zeroFlag"></div>
+        <template v-if="state.zeroFlag">
+          <br />
+          <br />
+          <br />登録されている投稿はありません</template
+        >
+        <div v-if="!state.zeroFlag">
+          <br />
+          <br />
+          <br />
+          <div v-for="displayPost in state.displayPosts" :key="displayPost.id">
+            <PostCardComponent
+              :displayPost="displayPost"
+              :reloadPosts="reloadPosts"
+              :categories="state.categories"
+            />
+          </div>
+          <InfiniteLoading :displayPosts="state.displayPosts" @infinite="load">
+            <template #complete>
+              <span></span>
+            </template>
+          </InfiniteLoading>
+        </div>
       </template>
     </template>
-    <div v-if="state.loadingFlag">
+    <template v-if="state.loadingFlag">
       <loading v-model:active="state.loadingFlag" :can-cancel="false" />
-    </div>
+    </template>
   </div>
 </template>
 
@@ -41,13 +58,16 @@ import InfiniteLoading from "v3-infinite-loading";
 import Loading from "vue-loading-overlay";
 import "v3-infinite-loading/lib/style.css";
 
+import PostCardComponent from "./PostCardComponent";
 import PostRegisterDialogComponent from "./PostRegisterDialogComponent";
+import usePostFunction from "../../customFunction/PostFunctionComponent";
 import usePostCategoryFunction from "../../customFunction/PostCategoryFunctionComponent";
 
 export default defineComponent({
   components: {
     InfiniteLoading,
     Loading,
+    PostCardComponent,
     PostRegisterDialogComponent,
   },
   async setup() {
@@ -61,10 +81,45 @@ export default defineComponent({
     });
 
     const { getCategories } = usePostCategoryFunction();
+    const { getPosts } = usePostFunction();
+
+    const LOADING_COUNT = 10;
 
     const initPost = async () => {
       state.categories = await getCategories();
+      state.allPosts = await getPosts();
+      if (!state.allPosts || !state.categories) {
+        state.errorFlag = true;
+      } else if (state.allPosts.length === 0) {
+        state.zeroFlag = true;
+        state.errorFlag = false;
+      } else {
+        state.errorFlag = false;
+      }
       state.loadingFlag = false;
+    };
+
+    const getAddDisplayPost = (startIndex) => {
+      const endIndex =
+        startIndex + LOADING_COUNT < state.allPosts.length
+          ? startIndex + LOADING_COUNT
+          : state.allPosts.length;
+      return state.allPosts.slice(startIndex, endIndex);
+    };
+
+    const load = async ($state) => {
+      try {
+        const addingPosts = getAddDisplayPost(state.displayPosts.length);
+        state.displayPosts = state.displayPosts.concat(addingPosts);
+        if (addingPosts.length < LOADING_COUNT) {
+          $state.complete();
+        } else {
+          $state.loaded();
+        }
+      } catch (error) {
+        $state.error();
+        state.errorFlag = true;
+      }
     };
 
     const reloadPosts = async () => {
@@ -75,7 +130,14 @@ export default defineComponent({
     return {
       state,
       reloadPosts,
+      load,
     };
   },
 });
 </script>
+
+<style scoped>
+.error {
+  color: red;
+}
+</style>

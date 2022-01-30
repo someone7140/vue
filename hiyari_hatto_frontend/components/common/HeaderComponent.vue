@@ -93,11 +93,11 @@ export default defineComponent({
     };
 
     const transferTop = async () => {
-      rootContext.$router.push("/");
+      window.location.href = "/";
     };
 
     const transferCategory = async () => {
-      rootContext.$router.push("/category");
+      window.location.href = "/category";
     };
 
     return { userState, state, logout, transferTop, transferCategory };

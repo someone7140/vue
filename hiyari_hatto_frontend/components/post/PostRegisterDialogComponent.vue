@@ -5,9 +5,16 @@
   <v-dialog v-model="state.showDialog" scrollable>
     <div class="justify-center dialogCardDiv">
       <v-card class="dialogCard">
-        <b>{{ postDetail ? "投稿編集" : "投稿登録" }}</b>
+        <div class="mt-3" style="display: flex; justify-content: space-between">
+          <div class="ml-3">
+            <b>{{ postDetail ? "投稿編集" : "投稿登録" }}</b>
+          </div>
+          <div class="mr-3" role="button" @click="hideDialog">
+            <v-icon>mdi-close-circle</v-icon>
+          </div>
+        </div>
         <br />
-        <v-card-text style="height: 400px">
+        <v-card-text style="height: 550px">
           <span class="error">{{ titleError }}</span>
           <v-text-field
             v-model="titleValue"

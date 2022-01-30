@@ -29,7 +29,6 @@
 
 <script>
 import { defineComponent } from "vue";
-import InfiniteLoading from "v3-infinite-loading";
 
 import CategoryDeleteDialogComponent from "./CategoryDeleteDialogComponent";
 import CategoryRegisterDialogComponent from "./CategoryRegisterDialogComponent";
@@ -40,7 +39,6 @@ export default defineComponent({
   components: {
     CategoryDeleteDialogComponent,
     CategoryRegisterDialogComponent,
-    InfiniteLoading,
   },
   async setup() {
     const app = getCurrentInstance();
@@ -57,10 +55,13 @@ export default defineComponent({
 <style scoped>
 .card {
   height: 150px;
+  max-width: 450px;
+  width: 100%;
   margin-bottom: 30px;
 }
 .card-title {
   height: 25px;
+  width: 350px;
   font-size: 1.5em;
 }
 </style>

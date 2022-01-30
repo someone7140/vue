@@ -5,7 +5,7 @@ export default function useAuthFunction() {
 
   // トークンからユーザ情報を取得
   async function getUserFromToken(localStorage) {
-    const token = localStorage.getItem(TOKEN_NAME);
+    const token = getTokenFromLocalStorage(localStorage);
     if (!token) {
       return undefined;
     }
@@ -53,6 +53,11 @@ export default function useAuthFunction() {
     return undefined;
   }
 
+  // LocalStorageからトークン取得
+  function getTokenFromLocalStorage(localStorage) {
+    return localStorage.getItem(TOKEN_NAME);
+  }
+
   // トークン削除
   async function deleteToken(localStorage) {
     localStorage.setItem(TOKEN_NAME, undefined);
@@ -62,6 +67,7 @@ export default function useAuthFunction() {
     deleteToken,
     getUserFromToken,
     getUserFromAuthCode,
+    getTokenFromLocalStorage,
   };
 }
 </script>

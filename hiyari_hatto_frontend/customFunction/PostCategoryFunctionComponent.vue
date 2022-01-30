@@ -1,10 +1,13 @@
 <script>
+import useAuthFunction from "./AuthFunctionComponent";
+
 export default function usePostCategoryFunction() {
   const $config = useRuntimeConfig();
+  const { getTokenFromLocalStorage } = useAuthFunction();
 
   // カテゴリーの追加
   async function careateCategory(name) {
-    const token = localStorage.getItem("authToken");
+    const token = getTokenFromLocalStorage(localStorage);
     if (!token) {
       return undefined;
     }
@@ -31,7 +34,7 @@ export default function usePostCategoryFunction() {
 
   // カテゴリーの編集
   async function editCategory(id, name) {
-    const token = localStorage.getItem("authToken");
+    const token = getTokenFromLocalStorage(localStorage);
     if (!token) {
       return undefined;
     }
@@ -58,7 +61,7 @@ export default function usePostCategoryFunction() {
 
   // カテゴリーの削除
   async function deleteCategory(id) {
-    const token = localStorage.getItem("authToken");
+    const token = getTokenFromLocalStorage();
     if (!token) {
       return undefined;
     }
@@ -85,7 +88,7 @@ export default function usePostCategoryFunction() {
 
   // カテゴリー取得
   async function getCategories() {
-    const token = localStorage.getItem("authToken");
+    const token = getTokenFromLocalStorage(localStorage);
     if (!token) {
       return undefined;
     }

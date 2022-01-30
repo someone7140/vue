@@ -1,6 +1,9 @@
 <script>
+import useAuthFunction from "./AuthFunctionComponent";
+
 export default function usePostFunction() {
   const $config = useRuntimeConfig();
+  const { getTokenFromLocalStorage } = useAuthFunction();
 
   // 投稿の追加
   async function careatePost(
@@ -11,7 +14,7 @@ export default function usePostFunction() {
     detail,
     occurDateTime
   ) {
-    const token = localStorage.getItem("authToken");
+    const token = getTokenFromLocalStorage(localStorage);
     if (!token) {
       return undefined;
     }
@@ -64,6 +67,31 @@ export default function usePostFunction() {
     } catch (_) {
       return undefined;
     }
+  }
+
+  // 投稿一覧取得
+  async function getPosts() {
+    const token = getTokenFromLocalStorage(localStorage);
+    if (!token) {
+      return undefined;
+    }
+    try {
+      const url = $config.API_HOST + "/hiyariHatto/listPost";
+      const params = {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      };
+      const res = await fetch(url, params);
+      if (res.ok) {
+        return await res.json();
+      }
+    } catch (_) {
+      return undefined;
+    }
     return undefined;
   }
 
@@ -73,6 +101,7 @@ export default function usePostFunction() {
 
   return {
     careatePost,
+    getPosts,
   };
 }
 </script>

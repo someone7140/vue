@@ -85,6 +85,7 @@ export default defineComponent({
       root.$toast.error("カテゴリーの登録に失敗しました");
     };
 
+    // 編集時の初期表示設定
     if (categoryDetail) {
       name.value = categoryDetail.name;
     }

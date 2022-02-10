@@ -22,6 +22,23 @@
         {{ omitWord(displayPost.detail, 100, "…") }}
       </span>
     </v-card-text>
+    <v-card-actions>
+      <v-row class="justify-center mt-1">
+        <v-col class="ml-10">
+          <PostRegisterDialogComponent
+            :postDetail="displayPost"
+            :reloadPosts="reloadPosts"
+            :categories="categories"
+          />
+        </v-col>
+        <v-col>
+          <PostDeleteDialogComponent
+            :postDetail="displayPost"
+            :reloadPosts="reloadPosts"
+          />
+        </v-col>
+      </v-row>
+    </v-card-actions>
   </v-card>
   <template v-if="state.showDetailDialogFlag">
     <PostDetailDialogComponent
@@ -37,6 +54,7 @@
 import { defineComponent, reactive } from "vue";
 
 import PostDetailDialogComponent from "./PostDetailDialogComponent";
+import PostFileDownloadComponent from "./PostFileDownloadComponent";
 import useCommonFunction from "../../customFunction/CommonFunctionComponent.vue";
 import useDateFunction from "../../customFunction/DateFunctionComponent.vue";
 

@@ -49,14 +49,14 @@
             >
               <v-icon>mdi-plus</v-icon>
             </v-btn>
-            <fieldset v-for="(field, idx) in urlFields" :key="idx">
+            <fieldset v-for="(urlField, idx) in urlFields" :key="idx">
               <br />
               <ErrorMessage
                 :name="`referenceUrls[${idx}].siteName`"
                 class="error"
               />
               <Field
-                :id="`siteName_${idx}`"
+                :id="`siteName_${idx}.siteName.id`"
                 :name="`referenceUrls[${idx}].siteName`"
                 v-slot="{ field }"
               >
@@ -64,11 +64,12 @@
                   v-bind="field"
                   label="サイト名"
                   style="width: 270px"
+                  v-model="urlField.value.siteName"
                 ></v-text-field>
               </Field>
               <ErrorMessage :name="`referenceUrls[${idx}].url`" class="error" />
               <Field
-                :id="`referenceUrls_${idx}`"
+                :id="`referenceUrls_${idx}.url.id`"
                 :name="`referenceUrls[${idx}].url`"
                 v-slot="{ field }"
               >
@@ -76,8 +77,15 @@
                   v-bind="field"
                   label="URL"
                   style="width: 270px"
+                  v-model="urlField.value.url"
                 ></v-text-field
               ></Field>
+              <span v-show="false">
+                <Field
+                  :id="`referenceUrls_${idx}.registeredId.id`"
+                  :name="`referenceUrls[${idx}].registeredId`"
+                ></Field>
+              </span>
               <v-btn
                 class="ml-2 mb-1"
                 icon
@@ -108,14 +116,14 @@
             >
               <v-icon>mdi-plus</v-icon>
             </v-btn>
-            <fieldset v-for="(field, idx) in fileFields" :key="idx">
+            <fieldset v-for="(fileField, idx) in fileFields" :key="idx">
               <br />
               <ErrorMessage
                 :name="`referenceFiles[${idx}].fileName`"
                 class="error"
               />
               <Field
-                :id="`fileName_${idx}`"
+                :id="`fileName_${idx}.fileName.id`"
                 :name="`referenceFiles[${idx}].fileName`"
                 style="width: 270px"
                 v-slot="{ field }"
@@ -124,6 +132,7 @@
                   v-bind="field"
                   label="ファイル名"
                   style="width: 270px"
+                  v-model="fileField.value.fileName"
                 ></v-text-field>
               </Field>
               <ErrorMessage
@@ -131,7 +140,7 @@
                 class="error"
               />
               <Field
-                :id="`file_${idx}`"
+                :id="`file_${idx}.file.id`"
                 :name="`referenceFiles[${idx}].file`"
                 v-slot="{ handleChange }"
               >
@@ -141,6 +150,33 @@
                   @change="handleChange"
                 />
               </Field>
+              <br />
+              <br />
+              <div
+                v-if="
+                  !fileField.value.fileUpdateFlag &&
+                  fileField.value.registeredId
+                "
+              >
+                <PostFileDownloadComponent
+                  :referenceFile="{
+                    title: fileField.value.registeredFileName,
+                    fileUrl: fileField.value.registeredFileUrl,
+                  }"
+                />
+              </div>
+              <span v-show="false">
+                <Field
+                  :id="`referenceFiles_${idx}`"
+                  :name="`referenceFiles[${idx}].registeredId`"
+                ></Field>
+              </span>
+              <span v-show="false">
+                <Field
+                  :id="`referenceFiles_${idx}`"
+                  :name="`referenceFiles[${idx}].fileUpdateFlag`"
+                ></Field>
+              </span>
               <br />
               <br />
               <v-btn
@@ -213,6 +249,27 @@ export default defineComponent({
       };
     });
 
+    function validateFileUpload(file) {
+      const referenceFile = this.from[0].value;
+      // IDが既に登録されていて変更がない場合はtrue
+      if (referenceFile.registeredId && !referenceFile.fileUpdateFlag) {
+        if (file && file.length > 0) {
+          const idx = fileFields.value.findIndex(
+            (f) => f.value.registeredId == referenceFile.registeredId
+          );
+          console.log(fileFields.value);
+          console.log(idx);
+          updateFile(idx, { ...referenceFile, fileUpdateFlag: "true" });
+        }
+        return true;
+      } else {
+        if (file && file.length > 0) {
+          return true;
+        }
+        return false;
+      }
+    }
+
     // 入力フォームの設定
     const postRegisterSchema = yup.object({
       title: yup.string().required("タイトルは必須項目です"),
@@ -232,15 +289,20 @@ export default defineComponent({
             fileName: yup.string().required("ファイル名を入力してください"),
             file: yup
               .array()
-              .required("ファイルを選択してください")
-              .min(1, "ファイルを選択してください"),
+              .test(
+                "file-upload-check",
+                "ファイルを登録してください",
+                validateFileUpload
+              ),
           })
         )
         .strict(),
     });
+
     const formContext = useForm({
       validationSchema: postRegisterSchema,
     });
+
     // タイトル
     const { value: title, errorMessage: titleError } = useField("title");
     const titleValue = computed({
@@ -262,12 +324,15 @@ export default defineComponent({
       remove: removeUrl,
       push: pushUrl,
       fields: urlFields,
+      replace: replaceUrl,
     } = useFieldArray("referenceUrls");
     // 添付ファイル
     const {
       remove: removeFile,
       push: pushFile,
       fields: fileFields,
+      update: updateFile,
+      replace: replaceFile,
     } = useFieldArray("referenceFiles");
     // 詳細
     const { value: detail } = useField("detail");
@@ -289,16 +354,9 @@ export default defineComponent({
     const state = reactive({
       showDialog: false,
     });
-    const showDialog = () => {
-      state.showDialog = true;
-    };
-    const hideDialog = () => {
-      state.showDialog = false;
-      formContext.resetForm();
-    };
 
     const pushUrlExec = () => {
-      pushUrl({ siteName: "", url: "" });
+      pushUrl({ id: undefined, siteName: "", url: "" });
     };
 
     const removeUrlExec = (idx) => {
@@ -306,7 +364,13 @@ export default defineComponent({
     };
 
     const pushFileExec = () => {
-      pushFile({ fileName: "", file: undefined });
+      pushFile({
+        fileName: "",
+        file: undefined,
+        registeredId: undefined,
+        registeredFileUrl: undefined,
+        registeredFileName: undefined,
+      });
     };
 
     const removeFileExec = (idx) => {
@@ -314,40 +378,114 @@ export default defineComponent({
     };
 
     const successRegisterDisplay = () => {
-      root.$toast.success("投稿を登録しました");
+      if (!postDetail) {
+        root.$toast.success("投稿を登録しました");
+      } else {
+        root.$toast.success("投稿を更新しました");
+      }
     };
 
     const errorRegisterDisplay = () => {
       root.$toast.error("投稿の登録に失敗しました");
     };
 
+    const initDisplay = () => {
+      // 編集時の初期表示設定
+      if (postDetail) {
+        title.value = postDetail.title;
+        categories.value = postDetail.categoryIds;
+        detail.value = postDetail.detail;
+        occurDateTime.value = postDetail.occurDateTime;
+
+        replaceUrl(
+          postDetail.referenceUrls.map((referenceUrl) => {
+            return {
+              registeredId: referenceUrl.id,
+              siteName: referenceUrl.siteName,
+              url: referenceUrl.url,
+            };
+          })
+        );
+        replaceFile(
+          postDetail.referenceFiles.map((referenceFile) => {
+            return {
+              registeredId: referenceFile.id,
+              fileName: referenceFile.title,
+              registeredFileUrl: referenceFile.fileUrl,
+              registeredFileName: referenceFile.title,
+              file: undefined,
+            };
+          })
+        );
+      }
+    };
+
+    const showDialog = () => {
+      state.showDialog = true;
+    };
+    const hideDialog = async () => {
+      state.showDialog = false;
+      formContext.resetForm();
+      if (postDetail) {
+        const _sleep = (ms) =>
+          new Promise((resolve) => setTimeout(resolve, ms));
+        await _sleep(1000);
+        initDisplay();
+      }
+    };
+
     async function onSubmit() {
       const varidateResult = await formContext.validate();
       if (varidateResult.valid) {
-        try {
-          const { careatePost } = usePostFunction();
-          const result = await careatePost(
-            titleValue.value,
-            categoriesValue.value,
-            urlFields.value,
-            fileFields.value,
-            detailValue.value,
-            occurDateTimeValue.value
-          );
-          if (result) {
-            successRegisterDisplay();
-            await props.reloadPosts();
-            state.showDialog = false;
-          } else {
+        if (!postDetail) {
+          try {
+            const { careatePost } = usePostFunction();
+            const result = await careatePost(
+              titleValue.value,
+              categoriesValue.value,
+              urlFields.value,
+              fileFields.value,
+              detailValue.value,
+              occurDateTimeValue.value
+            );
+            if (result) {
+              successRegisterDisplay();
+              await props.reloadPosts();
+              state.showDialog = false;
+            } else {
+              errorRegisterDisplay();
+            }
+          } catch (_) {
             errorRegisterDisplay();
           }
-        } catch (e) {
-          errorRegisterDisplay();
+        } else {
+          try {
+            const { updatePost } = usePostFunction();
+            const result = await updatePost(
+              postDetail.id,
+              titleValue.value,
+              categoriesValue.value,
+              urlFields.value,
+              fileFields.value,
+              detailValue.value,
+              occurDateTimeValue.value
+            );
+            if (result) {
+              successRegisterDisplay();
+              await props.reloadPosts();
+              state.showDialog = false;
+            } else {
+              errorRegisterDisplay();
+            }
+          } catch (_) {
+            errorRegisterDisplay();
+          }
         }
       }
     }
     const boundOnSubmit = onSubmit.bind(this);
 
+    initDisplay();
     return {
       postDetail,
       categoryOptions,

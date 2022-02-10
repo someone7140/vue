@@ -61,7 +61,7 @@ export default function usePostCategoryFunction() {
 
   // カテゴリーの削除
   async function deleteCategory(id) {
-    const token = getTokenFromLocalStorage();
+    const token = getTokenFromLocalStorage(localStorage);
     if (!token) {
       return undefined;
     }

@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "cross-env NODE_ENV=\"development\" nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview"
+  },
+  "devDependencies": {
+    "nuxt": "^3.0.0-rc.8"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "vue3-google-oauth2": "^1.0.6"
+  }
+}

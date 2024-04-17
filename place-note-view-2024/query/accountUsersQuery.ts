@@ -17,3 +17,31 @@ export const loginByGoogleAuthCodeMutationDocument = gql`
     }
   }
 `;
+
+export const addAccountUserByGoogleMutationDocument = gql`
+  mutation AddAccountUserByGoogle(
+    $authToken: String!
+    $userSettingId: String!
+    $name: String!
+  ) {
+    addAccountUserByGoogle(
+      authToken: $authToken
+      userSettingId: $userSettingId
+      name: $name
+    ) {
+      token
+      userSettingId
+      name
+    }
+  }
+`;
+
+export const getAccountUserByTokenQueryDocument = gql`
+  query getAccountUserByToken {
+    getAccountUserByToken {
+      token
+      userSettingId
+      name
+    }
+  }
+`;

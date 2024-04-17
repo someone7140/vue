@@ -15,6 +15,8 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
 const documents = {
     "\n  mutation GoogleAuthCodeVerify($authCode: String!) {\n    googleAuthCodeVerify(authCode: $authCode) {\n      token\n    }\n  }\n": types.GoogleAuthCodeVerifyDocument,
     "\n  mutation LoginByGoogleAuthCode($authCode: String!) {\n    loginByGoogleAuthCode(authCode: $authCode) {\n      token\n      userSettingId\n      name\n    }\n  }\n": types.LoginByGoogleAuthCodeDocument,
+    "\n  mutation AddAccountUserByGoogle(\n    $authToken: String!\n    $userSettingId: String!\n    $name: String!\n  ) {\n    addAccountUserByGoogle(\n      authToken: $authToken\n      userSettingId: $userSettingId\n      name: $name\n    ) {\n      token\n      userSettingId\n      name\n    }\n  }\n": types.AddAccountUserByGoogleDocument,
+    "\n  query getAccountUserByToken {\n    getAccountUserByToken {\n      token\n      userSettingId\n      name\n    }\n  }\n": types.GetAccountUserByTokenDocument,
 };
 
 /**
@@ -39,6 +41,14 @@ export function graphql(source: "\n  mutation GoogleAuthCodeVerify($authCode: St
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation LoginByGoogleAuthCode($authCode: String!) {\n    loginByGoogleAuthCode(authCode: $authCode) {\n      token\n      userSettingId\n      name\n    }\n  }\n"): (typeof documents)["\n  mutation LoginByGoogleAuthCode($authCode: String!) {\n    loginByGoogleAuthCode(authCode: $authCode) {\n      token\n      userSettingId\n      name\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation AddAccountUserByGoogle(\n    $authToken: String!\n    $userSettingId: String!\n    $name: String!\n  ) {\n    addAccountUserByGoogle(\n      authToken: $authToken\n      userSettingId: $userSettingId\n      name: $name\n    ) {\n      token\n      userSettingId\n      name\n    }\n  }\n"): (typeof documents)["\n  mutation AddAccountUserByGoogle(\n    $authToken: String!\n    $userSettingId: String!\n    $name: String!\n  ) {\n    addAccountUserByGoogle(\n      authToken: $authToken\n      userSettingId: $userSettingId\n      name: $name\n    ) {\n      token\n      userSettingId\n      name\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query getAccountUserByToken {\n    getAccountUserByToken {\n      token\n      userSettingId\n      name\n    }\n  }\n"): (typeof documents)["\n  query getAccountUserByToken {\n    getAccountUserByToken {\n      token\n      userSettingId\n      name\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

@@ -1,6 +1,70 @@
+<script setup lang="ts">
+import { authDelete, authSet, useLoginState } from '~/composables/globalState';
+import type { GetAccountUserByTokenQuery } from '~/gql/graphql';
+import { getAccountUserByTokenQueryDocument } from '~/query/accountUsersQuery';
+
+const { getToken } = useApollo()
+const loginState = useLoginState();
+
+const loading = ref(true)
+const { load: getAccountUserByTokenLazyQuery } = useLazyQuery<GetAccountUserByTokenQuery>(getAccountUserByTokenQueryDocument)
+
+onMounted(async () => {
+  if (!(loginState.value)) {
+    const authToken = await getToken()
+    // トークンでユーザ認証を行う
+    if (authToken) {
+      try {
+        const result = await getAccountUserByTokenLazyQuery();
+        if (result) {
+          authSet(authToken, result.getAccountUserByToken.userSettingId, result.getAccountUserByToken.name)
+        }
+      } catch (e) {
+        authDelete()
+      }
+    }
+  }
+  loading.value = false
+})
+
+</script>
+
 <template>
-  <div>
-    <slot />
+  <v-app>
+    <div v-if="loading">
+      Loading..
+    </div>
+    <div v-else>
+      <HeaderComponent />
+      <div class="wrapper">
+        <div>
+          <div>
+            <slot />
+          </div>
+
+        </div>
+      </div>
+    </div>
     <SnackbarComponent />
-  </div>
+  </v-app>
 </template>
+
+<style scoped>
+.wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 80px;
+
+  div {
+    max-width: 95%;
+    min-width: 300px;
+
+    div {
+      display: flex;
+      justify-content: start;
+      margin-left: 12px;
+      width: 100%;
+    }
+  }
+}
+</style>

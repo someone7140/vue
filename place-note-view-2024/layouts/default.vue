@@ -27,14 +27,15 @@ onMounted(async () => {
   loading.value = false
 })
 
+const temp = ref(true)
 </script>
 
 <template>
   <v-app>
-    <div v-if="loading">
+    <div v-show="loading">
       Loading..
     </div>
-    <div v-else>
+    <div v-show="!loading">
       <HeaderComponent />
       <div class="wrapper">
         <div>

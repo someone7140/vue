@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { authSet } from '~/composables/globalState';
 import type { LoginByGoogleAuthCodeMutation, LoginByGoogleAuthCodeMutationVariables } from '~/gql/graphql';
 import { loginByGoogleAuthCodeMutationDocument } from '~/query/accountUsersQuery';
 

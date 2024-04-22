@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useSnackbarState } from '~/composables/globalState';
-
 const snackbarState = useSnackbarState();
 const textColor = ref(snackbarState.value?.type === "error" ? "text-red-darken-1" : "text-white")
 

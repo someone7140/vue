@@ -17,6 +17,8 @@ const documents = {
     "\n  mutation LoginByGoogleAuthCode($authCode: String!) {\n    loginByGoogleAuthCode(authCode: $authCode) {\n      token\n      userSettingId\n      name\n    }\n  }\n": types.LoginByGoogleAuthCodeDocument,
     "\n  mutation AddAccountUserByGoogle(\n    $authToken: String!\n    $userSettingId: String!\n    $name: String!\n  ) {\n    addAccountUserByGoogle(\n      authToken: $authToken\n      userSettingId: $userSettingId\n      name: $name\n    ) {\n      token\n      userSettingId\n      name\n    }\n  }\n": types.AddAccountUserByGoogleDocument,
     "\n  query getAccountUserByToken {\n    getAccountUserByToken {\n      token\n      userSettingId\n      name\n    }\n  }\n": types.GetAccountUserByTokenDocument,
+    "\n  query GetMyPostCategories($nameFilter: String) {\n    getMyPostCategories(nameFilter: $nameFilter) {\n      id\n      userSettingId\n      name\n      parentCategoryId\n      displayOrder\n      memo\n    }\n  }\n": types.GetMyPostCategoriesDocument,
+    "\n  mutation AddPostCategory(\n    $name: String!\n    $parentCategoryId: String\n    $displayOrder: Int\n    $memo: String\n  ) {\n    addPostCategory(\n      name: $name\n      parentCategoryId: $parentCategoryId\n      displayOrder: $displayOrder\n      memo: $memo\n    )\n  }\n": types.AddPostCategoryDocument,
 };
 
 /**
@@ -49,6 +51,14 @@ export function graphql(source: "\n  mutation AddAccountUserByGoogle(\n    $auth
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query getAccountUserByToken {\n    getAccountUserByToken {\n      token\n      userSettingId\n      name\n    }\n  }\n"): (typeof documents)["\n  query getAccountUserByToken {\n    getAccountUserByToken {\n      token\n      userSettingId\n      name\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetMyPostCategories($nameFilter: String) {\n    getMyPostCategories(nameFilter: $nameFilter) {\n      id\n      userSettingId\n      name\n      parentCategoryId\n      displayOrder\n      memo\n    }\n  }\n"): (typeof documents)["\n  query GetMyPostCategories($nameFilter: String) {\n    getMyPostCategories(nameFilter: $nameFilter) {\n      id\n      userSettingId\n      name\n      parentCategoryId\n      displayOrder\n      memo\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation AddPostCategory(\n    $name: String!\n    $parentCategoryId: String\n    $displayOrder: Int\n    $memo: String\n  ) {\n    addPostCategory(\n      name: $name\n      parentCategoryId: $parentCategoryId\n      displayOrder: $displayOrder\n      memo: $memo\n    )\n  }\n"): (typeof documents)["\n  mutation AddPostCategory(\n    $name: String!\n    $parentCategoryId: String\n    $displayOrder: Int\n    $memo: String\n  ) {\n    addPostCategory(\n      name: $name\n      parentCategoryId: $parentCategoryId\n      displayOrder: $displayOrder\n      memo: $memo\n    )\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

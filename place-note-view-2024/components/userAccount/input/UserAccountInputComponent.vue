@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { userAccountInput, type UserAccountInputForm } from '~/composables/form/userAccountInput';
+import { commonInput } from '~/composables/form/commonInput';
+import { type UserAccountInputForm } from '~/composables/form/userAccountInput';
 
 const props = defineProps({
   submitFunc: {
@@ -13,16 +14,19 @@ const props = defineProps({
 })
 
 const userAccountInputFormState = ref<UserAccountInputForm>({})
-const { requiredValidation } = userAccountInput()
+const { requiredValidation } = commonInput()
 
 const submitUserAccount = () => {
-  props.submitFunc(userAccountInputFormState.value)
+  if (userAccountInputFormState.value.valid) {
+    props.submitFunc(userAccountInputFormState.value)
+  }
+
 }
 
 </script>
 
 <template>
-  <v-form validate-on="submit" @submit.prevent="submitUserAccount">
+  <v-form v-model="userAccountInputFormState.valid" validate-on="blur" @submit.prevent="submitUserAccount">
     <v-sheet min-width="300px">
       <v-text-field v-model="userAccountInputFormState.userSettingId" :rules="[requiredValidation]">
         <template v-slot:label>

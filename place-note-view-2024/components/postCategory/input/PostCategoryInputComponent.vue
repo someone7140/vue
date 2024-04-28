@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { commonInput } from '~/composables/form/commonInput';
 import { type PostCategoryInputForm } from '~/composables/form/postCategoryInput';
-import type { GetMyPostCategoriesQuery } from '~/gql/graphql';
 import { getMyPostCategoriesQueryDocument } from '~/query/postCategoryQuery';
+import type { GetMyPostCategoriesQuery, PostCategoryResponse } from '~/gql/graphql';
 
 const props = defineProps({
     submitFunc: {
@@ -12,9 +12,20 @@ const props = defineProps({
     disabledButton: {
         type: Boolean,
         default: false
+    },
+    postCategory: {
+        type: Object as () => PostCategoryResponse,
+        default: undefined
     }
 })
-const postCategoryInputFormState = ref<PostCategoryInputForm>({})
+const postCategoryInputFormState = ref<PostCategoryInputForm>(props.postCategory ? {
+    valid: false,
+    name: props.postCategory.name,
+    parentCategoryId: props.postCategory.parentCategoryId ?? undefined,
+    displayOrder: props.postCategory.displayOrder?.toString() ?? undefined,
+    memo: props.postCategory.memo ?? undefined,
+} : {})
+
 const { requiredValidation, numberValidation } = commonInput()
 
 const { result: categories, loading: getMyPostCategoriesLoading } = useQuery<GetMyPostCategoriesQuery>(getMyPostCategoriesQueryDocument, {
@@ -26,6 +37,10 @@ const submitCategory = () => {
     if (postCategoryInputFormState.value.valid) {
         props.submitFunc(postCategoryInputFormState.value)
     }
+}
+
+const listPageTransfer = () => {
+    navigateTo(`/postCategory/list`)
 }
 
 </script>
@@ -44,8 +59,8 @@ const submitCategory = () => {
                 </v-text-field>
                 <div v-if="categories?.getMyPostCategories && categories.getMyPostCategories.length > 0">
                     <v-select v-model="postCategoryInputFormState.parentCategoryId"
-                        :items="categories.getMyPostCategories.filter(c => !c.parentCategoryId)" item-title="name"
-                        item-value="id" label="親カテゴリー" clearable></v-select>
+                        :items="categories.getMyPostCategories.filter(c => !c.parentCategoryId && c.id !== props.postCategory?.id)"
+                        item-title="name" item-value="id" label="親カテゴリー" clearable></v-select>
                 </div>
                 <v-text-field v-model="postCategoryInputFormState.displayOrder" :rules="[numberValidation]">
                     <template v-slot:label>
@@ -53,9 +68,14 @@ const submitCategory = () => {
                     </template>
                 </v-text-field>
                 <v-textarea label="メモ" rows="3" v-model="postCategoryInputFormState.memo" />
-                <v-btn type="submit" class="bg-light-blue-darken-1 text-black" @disabled="props.disabledButton">
-                    登録
-                </v-btn>
+                <div class="d-flex justify-center">
+                    <v-btn type="submit" class="bg-light-blue-darken-1 text-black" @disabled="props.disabledButton">
+                        {{ props.postCategory ? "編集" : "登録" }}
+                    </v-btn>
+                    <v-btn class="bg-blue-grey-lighten-4 text-black ml-6" @click="listPageTransfer">
+                        一覧へ
+                    </v-btn>
+                </div>
             </v-sheet>
         </v-form>
     </div>

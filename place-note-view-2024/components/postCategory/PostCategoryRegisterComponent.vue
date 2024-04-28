@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PostCategoryInputForm } from '~/composables/form/postCategoryInput';
 import type { AddPostCategoryMutation, AddPostCategoryMutationVariables } from '~/gql/graphql';
-import { addPostCategoryMutationDocument, getMyPostCategoriesQueryDocument } from '~/query/postCategoryQuery';
+import { addPostCategoryMutationDocument } from '~/query/postCategoryQuery';
 
 const { mutate: addPostCategoryMutate, loading: addPostCategoryLoading } = useMutation<AddPostCategoryMutation>(addPostCategoryMutationDocument, {
     errorPolicy: 'all',
@@ -28,6 +28,7 @@ const submitAddCategory = async (submitData: PostCategoryInputForm) => {
             message: "カテゴリーを登録しました。",
             active: true
         }
+        navigateTo(`/postCategory/list`)
     } else {
         snackbarState.value = {
             type: "error",

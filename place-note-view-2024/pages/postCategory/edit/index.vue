@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { LocationQueryValue } from 'vue-router';
-import { useLoginState } from '~/composables/globalState';
 
 const route = useRoute()
 const categoryId = route.query.categoryId as LocationQueryValue ?? ""

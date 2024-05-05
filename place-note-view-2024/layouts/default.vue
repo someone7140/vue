@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { authDelete, authSet, useLoginState } from '~/composables/globalState';
 import type { GetAccountUserByTokenQuery } from '~/gql/graphql';
 import { getAccountUserByTokenQueryDocument } from '~/query/accountUsersQuery';
 
@@ -26,8 +25,6 @@ onMounted(async () => {
   }
   loading.value = false
 })
-
-const temp = ref(true)
 </script>
 
 <template>

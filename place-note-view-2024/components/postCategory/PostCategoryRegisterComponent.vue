@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { PostCategoryInputForm } from '~/composables/form/postCategoryInput';
 import type { AddPostCategoryMutation, AddPostCategoryMutationVariables } from '~/gql/graphql';
 import { addPostCategoryMutationDocument } from '~/query/postCategoryQuery';
 

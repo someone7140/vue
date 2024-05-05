@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useLoginState } from '~/composables/globalState';
 
 const loginState = useLoginState();
 

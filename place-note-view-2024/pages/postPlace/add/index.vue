@@ -6,7 +6,7 @@ const loginState = useLoginState();
 
 <template>
   <div v-if="loginState != null">
-    <div class="mb-3">カテゴリー一覧</div>
-    <PostCategoryListComponent :displayActionButton="true" />
+    <div class="mb-3">場所追加</div>
+    <PostPlaceRegisterComponent />
   </div>
 </template>

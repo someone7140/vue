@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { commonInput } from '~/composables/form/commonInput';
-import { type UserAccountInputForm } from '~/composables/form/userAccountInput';
 
 const props = defineProps({
   submitFunc: {

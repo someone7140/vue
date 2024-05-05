@@ -33,6 +33,9 @@ export default defineNuxtConfig({
       pathPrefix: false,
     },
   ],
+  imports: {
+    dirs: ["composables/**"],
+  },
   apollo: {
     clients: {
       default: {

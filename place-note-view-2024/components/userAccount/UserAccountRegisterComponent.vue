@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { UserAccountInputForm } from '~/composables/form/userAccountInput';
 import type { AddAccountUserByGoogleMutation, AddAccountUserByGoogleMutationVariables, GoogleAuthCodeVerifyMutation, GoogleAuthCodeVerifyMutationVariables } from '~/gql/graphql';
 import { addAccountUserByGoogleMutationDocument, googleAuthCodeVerifyMutationDocument } from '~/query/accountUsersQuery';
 

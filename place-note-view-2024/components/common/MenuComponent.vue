@@ -44,6 +44,16 @@ const categoryAdd = {
   href: "/postCategory/add",
 }
 
+const placeList = {
+  title: "場所一覧",
+  href: "/postPlace/list",
+}
+
+const placeAdd = {
+  title: "場所追加",
+  href: "/postPlace/add",
+}
+
 const notLoginMenuList = [
   topMenu,
   loginMenu,
@@ -55,6 +65,11 @@ const loginMenuList = [
   {
     title: "カテゴリー管理", child: [
       categoryList, categoryAdd
+    ],
+  },
+  {
+    title: "場所管理", child: [
+      placeList, placeAdd
     ],
   },
   logoutMenu

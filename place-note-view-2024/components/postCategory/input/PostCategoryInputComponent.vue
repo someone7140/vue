@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { commonInput } from '~/composables/form/commonInput';
-import { type PostCategoryInputForm } from '~/composables/form/postCategoryInput';
 import { getMyPostCategoriesQueryDocument } from '~/query/postCategoryQuery';
 import type { GetMyPostCategoriesQuery, PostCategoryResponse } from '~/gql/graphql';
 

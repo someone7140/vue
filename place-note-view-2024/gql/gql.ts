@@ -22,6 +22,8 @@ const documents = {
     "\n  mutation AddPostCategory(\n    $name: String!\n    $parentCategoryId: String\n    $displayOrder: Int\n    $memo: String\n  ) {\n    addPostCategory(\n      name: $name\n      parentCategoryId: $parentCategoryId\n      displayOrder: $displayOrder\n      memo: $memo\n    )\n  }\n": types.AddPostCategoryDocument,
     "\n  mutation EditPostCategory(\n    $id: String!\n    $name: String!\n    $parentCategoryId: String\n    $displayOrder: Int\n    $memo: String\n  ) {\n    editPostCategory(\n      id: $id\n      name: $name\n      parentCategoryId: $parentCategoryId\n      displayOrder: $displayOrder\n      memo: $memo\n    )\n  }\n": types.EditPostCategoryDocument,
     "\n  mutation DeletePostCategory($id: String!) {\n    deletePostCategory(id: $id)\n  }\n": types.DeletePostCategoryDocument,
+    "\n  mutation AddPostPlace(\n    $name: String!\n    $address: String\n    $latLon: LatLon\n    $prefectureCode: String\n    $categoryIdList: [String!]!\n    $detail: String\n    $urlList: [String!]!\n  ) {\n    addPostPlace(\n      name: $name\n      address: $address\n      latLon: $latLon\n      prefectureCode: $prefectureCode\n      categoryIdList: $categoryIdList\n      detail: $detail\n      urlList: $urlList\n    )\n  }\n": types.AddPostPlaceDocument,
+    "\n  query GetLatLonFromAddress($address: String!) {\n    getLatLonFromAddress(address: $address) {\n      lat\n      lon\n    }\n  }\n": types.GetLatLonFromAddressDocument,
 };
 
 /**
@@ -74,6 +76,14 @@ export function graphql(source: "\n  mutation EditPostCategory(\n    $id: String
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation DeletePostCategory($id: String!) {\n    deletePostCategory(id: $id)\n  }\n"): (typeof documents)["\n  mutation DeletePostCategory($id: String!) {\n    deletePostCategory(id: $id)\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation AddPostPlace(\n    $name: String!\n    $address: String\n    $latLon: LatLon\n    $prefectureCode: String\n    $categoryIdList: [String!]!\n    $detail: String\n    $urlList: [String!]!\n  ) {\n    addPostPlace(\n      name: $name\n      address: $address\n      latLon: $latLon\n      prefectureCode: $prefectureCode\n      categoryIdList: $categoryIdList\n      detail: $detail\n      urlList: $urlList\n    )\n  }\n"): (typeof documents)["\n  mutation AddPostPlace(\n    $name: String!\n    $address: String\n    $latLon: LatLon\n    $prefectureCode: String\n    $categoryIdList: [String!]!\n    $detail: String\n    $urlList: [String!]!\n  ) {\n    addPostPlace(\n      name: $name\n      address: $address\n      latLon: $latLon\n      prefectureCode: $prefectureCode\n      categoryIdList: $categoryIdList\n      detail: $detail\n      urlList: $urlList\n    )\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetLatLonFromAddress($address: String!) {\n    getLatLonFromAddress(address: $address) {\n      lat\n      lon\n    }\n  }\n"): (typeof documents)["\n  query GetLatLonFromAddress($address: String!) {\n    getLatLonFromAddress(address: $address) {\n      lat\n      lon\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

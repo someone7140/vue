@@ -11,24 +11,24 @@
     "graphql-generate": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
-    "@apollo/client": "^3.9.10",
+    "@apollo/client": "^3.10.8",
     "@graphql-codegen/cli": "^5.0.2",
-    "@graphql-codegen/client-preset": "^4.2.5",
+    "@graphql-codegen/client-preset": "^4.3.2",
     "@mdi/font": "^7.4.47",
     "@nuxtjs/apollo": "^5.0.0-alpha.14",
     "@vue/apollo-composable": "^4.0.2",
-    "graphql": "^16.8.1",
+    "graphql": "^16.9.0",
     "graphql-tag": "^2.12.6",
-    "nuxt": "^3.11.2",
+    "nuxt": "^3.12.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.4",
-    "vue": "^3.4.21",
-    "vue-router": "^4.3.0",
-    "vue-sidebar-menu": "^5.3.1",
+    "typescript": "^5.5.3",
+    "vue": "^3.4.31",
+    "vue-router": "^4.4.0",
+    "vue-sidebar-menu": "^5.4.0",
     "vue3-google-login": "^2.0.26"
   },
   "devDependencies": {
     "vite-plugin-vuetify": "^2.0.3",
-    "vuetify": "^3.5.15"
+    "vuetify": "^3.6.11"
   }
 }

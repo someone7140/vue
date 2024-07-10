@@ -28,7 +28,7 @@ export type GoogleAuthCodeVerifyResponse = {
   token: Scalars['String']['output'];
 };
 
-export type LatLon = {
+export type LatLonInput = {
   lat: Scalars['Float']['input'];
   lon: Scalars['Float']['input'];
 };
@@ -39,8 +39,8 @@ export type LatLonResponse = {
   lon: Scalars['Float']['output'];
 };
 
-export type PlaceNoteMutation = {
-  __typename?: 'PlaceNoteMutation';
+export type Mutation = {
+  __typename?: 'Mutation';
   addAccountUserByGoogle: AccountUserResponse;
   addPostCategory: Scalars['Boolean']['output'];
   addPostPlace: Scalars['Boolean']['output'];
@@ -53,14 +53,14 @@ export type PlaceNoteMutation = {
 };
 
 
-export type PlaceNoteMutationAddAccountUserByGoogleArgs = {
+export type MutationAddAccountUserByGoogleArgs = {
   authToken: Scalars['String']['input'];
   name: Scalars['String']['input'];
   userSettingId: Scalars['String']['input'];
 };
 
 
-export type PlaceNoteMutationAddPostCategoryArgs = {
+export type MutationAddPostCategoryArgs = {
   displayOrder?: InputMaybe<Scalars['Int']['input']>;
   memo?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
@@ -68,28 +68,28 @@ export type PlaceNoteMutationAddPostCategoryArgs = {
 };
 
 
-export type PlaceNoteMutationAddPostPlaceArgs = {
+export type MutationAddPostPlaceArgs = {
   address?: InputMaybe<Scalars['String']['input']>;
   categoryIdList: Array<Scalars['String']['input']>;
   detail?: InputMaybe<Scalars['String']['input']>;
-  latLon?: InputMaybe<LatLon>;
+  latLon?: InputMaybe<LatLonInput>;
   name: Scalars['String']['input'];
   prefectureCode?: InputMaybe<Scalars['String']['input']>;
   urlList: Array<Scalars['String']['input']>;
 };
 
 
-export type PlaceNoteMutationDeletePostCategoryArgs = {
+export type MutationDeletePostCategoryArgs = {
   id: Scalars['String']['input'];
 };
 
 
-export type PlaceNoteMutationDeletePostPlaceArgs = {
+export type MutationDeletePostPlaceArgs = {
   id: Scalars['String']['input'];
 };
 
 
-export type PlaceNoteMutationEditPostCategoryArgs = {
+export type MutationEditPostCategoryArgs = {
   displayOrder?: InputMaybe<Scalars['Int']['input']>;
   id: Scalars['String']['input'];
   memo?: InputMaybe<Scalars['String']['input']>;
@@ -98,55 +98,25 @@ export type PlaceNoteMutationEditPostCategoryArgs = {
 };
 
 
-export type PlaceNoteMutationEditPostPlaceArgs = {
+export type MutationEditPostPlaceArgs = {
   address?: InputMaybe<Scalars['String']['input']>;
   categoryIdList: Array<Scalars['String']['input']>;
   detail?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['String']['input'];
-  latLon?: InputMaybe<LatLon>;
+  latLon?: InputMaybe<LatLonInput>;
   name: Scalars['String']['input'];
   prefectureCode?: InputMaybe<Scalars['String']['input']>;
   urlList: Array<Scalars['String']['input']>;
 };
 
 
-export type PlaceNoteMutationGoogleAuthCodeVerifyArgs = {
+export type MutationGoogleAuthCodeVerifyArgs = {
   authCode: Scalars['String']['input'];
 };
 
 
-export type PlaceNoteMutationLoginByGoogleAuthCodeArgs = {
+export type MutationLoginByGoogleAuthCodeArgs = {
   authCode: Scalars['String']['input'];
-};
-
-export type PlaceNoteQuery = {
-  __typename?: 'PlaceNoteQuery';
-  getAccountUserByToken: AccountUserResponse;
-  getLatLonFromAddress?: Maybe<LatLonResponse>;
-  getMyPostCategories: Array<PostCategoryResponse>;
-  getMyPostCategoryById: PostCategoryResponse;
-  getPostPlaces: PostCategoryResponse;
-};
-
-
-export type PlaceNoteQueryGetLatLonFromAddressArgs = {
-  address: Scalars['String']['input'];
-};
-
-
-export type PlaceNoteQueryGetMyPostCategoriesArgs = {
-  nameFilter?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-export type PlaceNoteQueryGetMyPostCategoryByIdArgs = {
-  idFilter: Scalars['String']['input'];
-};
-
-
-export type PlaceNoteQueryGetPostPlacesArgs = {
-  categoryFilter?: InputMaybe<Scalars['String']['input']>;
-  idFilter?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type PostCategoryResponse = {
@@ -159,19 +129,62 @@ export type PostCategoryResponse = {
   userSettingId: Scalars['String']['output'];
 };
 
+export type PostPlaceResponse = {
+  __typename?: 'PostPlaceResponse';
+  address?: Maybe<Scalars['String']['output']>;
+  categoryIdList: Array<Scalars['String']['output']>;
+  detail?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  latLon?: Maybe<LatLonResponse>;
+  name: Scalars['String']['output'];
+  prefectureCode?: Maybe<Scalars['String']['output']>;
+  urlList: Array<Scalars['String']['output']>;
+  userSettingId: Scalars['String']['output'];
+};
+
+export type Query = {
+  __typename?: 'Query';
+  getAccountUserByToken: AccountUserResponse;
+  getLatLonFromAddress?: Maybe<LatLonResponse>;
+  getMyPostCategories: Array<PostCategoryResponse>;
+  getMyPostCategoryById: PostCategoryResponse;
+  getPostPlaces: Array<PostPlaceResponse>;
+};
+
+
+export type QueryGetLatLonFromAddressArgs = {
+  address: Scalars['String']['input'];
+};
+
+
+export type QueryGetMyPostCategoriesArgs = {
+  nameFilter?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryGetMyPostCategoryByIdArgs = {
+  idFilter: Scalars['String']['input'];
+};
+
+
+export type QueryGetPostPlacesArgs = {
+  categoryFilter?: InputMaybe<Scalars['String']['input']>;
+  idFilter?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type GoogleAuthCodeVerifyMutationVariables = Exact<{
   authCode: Scalars['String']['input'];
 }>;
 
 
-export type GoogleAuthCodeVerifyMutation = { __typename?: 'PlaceNoteMutation', googleAuthCodeVerify: { __typename?: 'GoogleAuthCodeVerifyResponse', token: string } };
+export type GoogleAuthCodeVerifyMutation = { __typename?: 'Mutation', googleAuthCodeVerify: { __typename?: 'GoogleAuthCodeVerifyResponse', token: string } };
 
 export type LoginByGoogleAuthCodeMutationVariables = Exact<{
   authCode: Scalars['String']['input'];
 }>;
 
 
-export type LoginByGoogleAuthCodeMutation = { __typename?: 'PlaceNoteMutation', loginByGoogleAuthCode: { __typename?: 'AccountUserResponse', token: string, userSettingId: string, name: string } };
+export type LoginByGoogleAuthCodeMutation = { __typename?: 'Mutation', loginByGoogleAuthCode: { __typename?: 'AccountUserResponse', token: string, userSettingId: string, name: string } };
 
 export type AddAccountUserByGoogleMutationVariables = Exact<{
   authToken: Scalars['String']['input'];
@@ -180,26 +193,26 @@ export type AddAccountUserByGoogleMutationVariables = Exact<{
 }>;
 
 
-export type AddAccountUserByGoogleMutation = { __typename?: 'PlaceNoteMutation', addAccountUserByGoogle: { __typename?: 'AccountUserResponse', token: string, userSettingId: string, name: string } };
+export type AddAccountUserByGoogleMutation = { __typename?: 'Mutation', addAccountUserByGoogle: { __typename?: 'AccountUserResponse', token: string, userSettingId: string, name: string } };
 
 export type GetAccountUserByTokenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAccountUserByTokenQuery = { __typename?: 'PlaceNoteQuery', getAccountUserByToken: { __typename?: 'AccountUserResponse', token: string, userSettingId: string, name: string } };
+export type GetAccountUserByTokenQuery = { __typename?: 'Query', getAccountUserByToken: { __typename?: 'AccountUserResponse', token: string, userSettingId: string, name: string } };
 
 export type GetMyPostCategoriesQueryVariables = Exact<{
   nameFilter?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type GetMyPostCategoriesQuery = { __typename?: 'PlaceNoteQuery', getMyPostCategories: Array<{ __typename?: 'PostCategoryResponse', id: string, userSettingId: string, name: string, parentCategoryId?: string | null, displayOrder?: number | null, memo?: string | null }> };
+export type GetMyPostCategoriesQuery = { __typename?: 'Query', getMyPostCategories: Array<{ __typename?: 'PostCategoryResponse', id: string, userSettingId: string, name: string, parentCategoryId?: string | null, displayOrder?: number | null, memo?: string | null }> };
 
 export type GetMyPostCategoryByIdQueryVariables = Exact<{
   idFilter: Scalars['String']['input'];
 }>;
 
 
-export type GetMyPostCategoryByIdQuery = { __typename?: 'PlaceNoteQuery', getMyPostCategoryById: { __typename?: 'PostCategoryResponse', id: string, userSettingId: string, name: string, parentCategoryId?: string | null, displayOrder?: number | null, memo?: string | null } };
+export type GetMyPostCategoryByIdQuery = { __typename?: 'Query', getMyPostCategoryById: { __typename?: 'PostCategoryResponse', id: string, userSettingId: string, name: string, parentCategoryId?: string | null, displayOrder?: number | null, memo?: string | null } };
 
 export type AddPostCategoryMutationVariables = Exact<{
   name: Scalars['String']['input'];
@@ -209,7 +222,7 @@ export type AddPostCategoryMutationVariables = Exact<{
 }>;
 
 
-export type AddPostCategoryMutation = { __typename?: 'PlaceNoteMutation', addPostCategory: boolean };
+export type AddPostCategoryMutation = { __typename?: 'Mutation', addPostCategory: boolean };
 
 export type EditPostCategoryMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -220,19 +233,19 @@ export type EditPostCategoryMutationVariables = Exact<{
 }>;
 
 
-export type EditPostCategoryMutation = { __typename?: 'PlaceNoteMutation', editPostCategory: boolean };
+export type EditPostCategoryMutation = { __typename?: 'Mutation', editPostCategory: boolean };
 
 export type DeletePostCategoryMutationVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type DeletePostCategoryMutation = { __typename?: 'PlaceNoteMutation', deletePostCategory: boolean };
+export type DeletePostCategoryMutation = { __typename?: 'Mutation', deletePostCategory: boolean };
 
 export type AddPostPlaceMutationVariables = Exact<{
   name: Scalars['String']['input'];
   address?: InputMaybe<Scalars['String']['input']>;
-  latLon?: InputMaybe<LatLon>;
+  latLon?: InputMaybe<LatLonInput>;
   prefectureCode?: InputMaybe<Scalars['String']['input']>;
   categoryIdList: Array<Scalars['String']['input']> | Scalars['String']['input'];
   detail?: InputMaybe<Scalars['String']['input']>;
@@ -240,14 +253,14 @@ export type AddPostPlaceMutationVariables = Exact<{
 }>;
 
 
-export type AddPostPlaceMutation = { __typename?: 'PlaceNoteMutation', addPostPlace: boolean };
+export type AddPostPlaceMutation = { __typename?: 'Mutation', addPostPlace: boolean };
 
 export type GetLatLonFromAddressQueryVariables = Exact<{
   address: Scalars['String']['input'];
 }>;
 
 
-export type GetLatLonFromAddressQuery = { __typename?: 'PlaceNoteQuery', getLatLonFromAddress?: { __typename?: 'LatLonResponse', lat: number, lon: number } | null };
+export type GetLatLonFromAddressQuery = { __typename?: 'Query', getLatLonFromAddress?: { __typename?: 'LatLonResponse', lat: number, lon: number } | null };
 
 
 export const GoogleAuthCodeVerifyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"GoogleAuthCodeVerify"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"authCode"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"googleAuthCodeVerify"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"authCode"},"value":{"kind":"Variable","name":{"kind":"Name","value":"authCode"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"token"}}]}}]}}]} as unknown as DocumentNode<GoogleAuthCodeVerifyMutation, GoogleAuthCodeVerifyMutationVariables>;
@@ -259,5 +272,5 @@ export const GetMyPostCategoryByIdDocument = {"kind":"Document","definitions":[{
 export const AddPostCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddPostCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"parentCategoryId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"displayOrder"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"memo"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addPostCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"parentCategoryId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"parentCategoryId"}}},{"kind":"Argument","name":{"kind":"Name","value":"displayOrder"},"value":{"kind":"Variable","name":{"kind":"Name","value":"displayOrder"}}},{"kind":"Argument","name":{"kind":"Name","value":"memo"},"value":{"kind":"Variable","name":{"kind":"Name","value":"memo"}}}]}]}}]} as unknown as DocumentNode<AddPostCategoryMutation, AddPostCategoryMutationVariables>;
 export const EditPostCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"EditPostCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"parentCategoryId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"displayOrder"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"memo"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"editPostCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"parentCategoryId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"parentCategoryId"}}},{"kind":"Argument","name":{"kind":"Name","value":"displayOrder"},"value":{"kind":"Variable","name":{"kind":"Name","value":"displayOrder"}}},{"kind":"Argument","name":{"kind":"Name","value":"memo"},"value":{"kind":"Variable","name":{"kind":"Name","value":"memo"}}}]}]}}]} as unknown as DocumentNode<EditPostCategoryMutation, EditPostCategoryMutationVariables>;
 export const DeletePostCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeletePostCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deletePostCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<DeletePostCategoryMutation, DeletePostCategoryMutationVariables>;
-export const AddPostPlaceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddPostPlace"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"address"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"latLon"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"LatLon"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"prefectureCode"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"categoryIdList"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"detail"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"urlList"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addPostPlace"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"address"},"value":{"kind":"Variable","name":{"kind":"Name","value":"address"}}},{"kind":"Argument","name":{"kind":"Name","value":"latLon"},"value":{"kind":"Variable","name":{"kind":"Name","value":"latLon"}}},{"kind":"Argument","name":{"kind":"Name","value":"prefectureCode"},"value":{"kind":"Variable","name":{"kind":"Name","value":"prefectureCode"}}},{"kind":"Argument","name":{"kind":"Name","value":"categoryIdList"},"value":{"kind":"Variable","name":{"kind":"Name","value":"categoryIdList"}}},{"kind":"Argument","name":{"kind":"Name","value":"detail"},"value":{"kind":"Variable","name":{"kind":"Name","value":"detail"}}},{"kind":"Argument","name":{"kind":"Name","value":"urlList"},"value":{"kind":"Variable","name":{"kind":"Name","value":"urlList"}}}]}]}}]} as unknown as DocumentNode<AddPostPlaceMutation, AddPostPlaceMutationVariables>;
+export const AddPostPlaceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddPostPlace"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"address"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"latLon"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"LatLonInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"prefectureCode"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"categoryIdList"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"detail"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"urlList"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addPostPlace"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"address"},"value":{"kind":"Variable","name":{"kind":"Name","value":"address"}}},{"kind":"Argument","name":{"kind":"Name","value":"latLon"},"value":{"kind":"Variable","name":{"kind":"Name","value":"latLon"}}},{"kind":"Argument","name":{"kind":"Name","value":"prefectureCode"},"value":{"kind":"Variable","name":{"kind":"Name","value":"prefectureCode"}}},{"kind":"Argument","name":{"kind":"Name","value":"categoryIdList"},"value":{"kind":"Variable","name":{"kind":"Name","value":"categoryIdList"}}},{"kind":"Argument","name":{"kind":"Name","value":"detail"},"value":{"kind":"Variable","name":{"kind":"Name","value":"detail"}}},{"kind":"Argument","name":{"kind":"Name","value":"urlList"},"value":{"kind":"Variable","name":{"kind":"Name","value":"urlList"}}}]}]}}]} as unknown as DocumentNode<AddPostPlaceMutation, AddPostPlaceMutationVariables>;
 export const GetLatLonFromAddressDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetLatLonFromAddress"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"address"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getLatLonFromAddress"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"address"},"value":{"kind":"Variable","name":{"kind":"Name","value":"address"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lat"}},{"kind":"Field","name":{"kind":"Name","value":"lon"}}]}}]}}]} as unknown as DocumentNode<GetLatLonFromAddressQuery, GetLatLonFromAddressQueryVariables>;

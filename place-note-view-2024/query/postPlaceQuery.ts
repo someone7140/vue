@@ -4,7 +4,7 @@ export const addPostPlaceMutationDocument = gql`
   mutation AddPostPlace(
     $name: String!
     $address: String
-    $latLon: LatLon
+    $latLon: LatLonInput
     $prefectureCode: String
     $categoryIdList: [String!]!
     $detail: String

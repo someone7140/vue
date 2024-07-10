@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { AddPostPlaceMutation, AddPostPlaceMutationVariables, LatLon } from '~/gql/graphql';
+import type { AddPostPlaceMutation, AddPostPlaceMutationVariables, LatLonInput } from '~/gql/graphql';
 import { addPostPlaceMutationDocument } from '~/query/postPlaceQuery';
 
 const { mutate: addPostPlaceMutate } = useMutation<AddPostPlaceMutation>(addPostPlaceMutationDocument, {
@@ -12,7 +12,7 @@ const loading = ref(false)
 const submitAddPlace = async (submitData: PostPlaceInputForm) => {
     loading.value = true
     // 住所から緯度経度と都道府県コードを取得
-    let latLon: LatLon | undefined = undefined
+    let latLon: LatLonInput | undefined = undefined
     let prefectureCode: string | undefined = undefined
     if (submitData.address) {
         const addressInfo = await getAddressInfo(submitData.address)

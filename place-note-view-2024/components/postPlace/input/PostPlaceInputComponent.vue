@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { GetMyPostCategoriesQuery } from '~/gql/graphql';
+import { getMyPostCategoriesQueryDocument } from '~/query/postCategoryQuery';
 
 const props = defineProps({
     submitFunc: {
@@ -13,8 +15,12 @@ const props = defineProps({
 const postPlaceInputFormState = ref<PostPlaceInputForm>({
     valid: false,
 })
+const { result: categories } = useQuery<GetMyPostCategoriesQuery>(getMyPostCategoriesQueryDocument, {
+    errorPolicy: 'all',
+    nameFilter: null
+}, { fetchPolicy: 'network-only', })
 
-const { requiredValidation, numberValidation } = commonInput()
+const { requiredValidation } = commonInput()
 
 const submitPlace = () => {
     if (postPlaceInputFormState.value.valid) {
@@ -24,6 +30,10 @@ const submitPlace = () => {
 
 const listPageTransfer = () => {
     navigateTo(`/postCategory/list`)
+}
+
+const updateCategoryIds = (categoryIdList: string[]) => {
+    postPlaceInputFormState.value.categoryIdList = categoryIdList
 }
 
 </script>
@@ -41,6 +51,23 @@ const listPageTransfer = () => {
                     住所
                 </template>
             </v-text-field>
+            <div class="mb-1">カテゴリー設定</div>
+            <div v-if="categories?.getMyPostCategories && categories.getMyPostCategories.length > 0">
+                <PostCategorySelectDialogComponent :categories="categories.getMyPostCategories"
+                    :checkedCategoryIds="postPlaceInputFormState.categoryIdList"
+                    :updateCategoryIdsFunc="updateCategoryIds" />
+                <div>
+                    <v-list lines="one" max-width="500px">
+                        <v-list-item v-for="categoryId in postPlaceInputFormState.categoryIdList" :key="categoryId"
+                            class="text-pre-wrap" style="-webkit-line-clamp:10; overflow-wrap:anywhere">
+                            {{ categories?.getMyPostCategories.find(c => c.id === categoryId)?.name }}
+                        </v-list-item>
+                    </v-list>
+                </div>
+            </div>
+            <div v-else>
+                登録されているカテゴリーはありません
+            </div>
             <v-textarea label="詳細" rows="3" v-model="postPlaceInputFormState.detail" />
             <div class="d-flex justify-center">
                 <v-btn type="submit" class="bg-light-blue-darken-1 text-black" @disabled="props.disabledButton">

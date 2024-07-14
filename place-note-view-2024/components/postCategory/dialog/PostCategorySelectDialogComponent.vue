@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DeletePostCategoryMutation, DeletePostCategoryMutationVariables, PostCategoryResponse } from '~/gql/graphql';
+import type { PostCategoryResponse } from '~/gql/graphql';
 
 const props = defineProps({
     categories: {

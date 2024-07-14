@@ -1,10 +1,16 @@
 <script setup lang="ts">
-import type { AddPostPlaceMutation, AddPostPlaceMutationVariables, LatLonInput } from '~/gql/graphql';
+import type { AddPostPlaceMutation, AddPostPlaceMutationVariables, GetMyPostCategoriesQuery, LatLonInput } from '~/gql/graphql';
+import { getMyPostCategoriesQueryDocument } from '~/query/postCategoryQuery';
 import { addPostPlaceMutationDocument } from '~/query/postPlaceQuery';
 
 const { mutate: addPostPlaceMutate } = useMutation<AddPostPlaceMutation>(addPostPlaceMutationDocument, {
     errorPolicy: 'all',
 })
+const { result: categories, loading: categoryLoading } = useQuery<GetMyPostCategoriesQuery>(getMyPostCategoriesQueryDocument, {
+    errorPolicy: 'all',
+    nameFilter: null
+}, { fetchPolicy: 'network-only', })
+
 const snackbarState = useSnackbarState();
 const { getAddressInfo } = useGeolocationService();
 const loading = ref(false)
@@ -44,7 +50,7 @@ const submitAddPlace = async (submitData: PostPlaceInputForm) => {
             message: "場所を登録しました。",
             active: true
         }
-        navigateTo(`/postCategory/list`)
+        navigateTo(`/postPlace/list`)
     } else {
         snackbarState.value = {
             type: "error",
@@ -58,5 +64,11 @@ const submitAddPlace = async (submitData: PostPlaceInputForm) => {
 </script>
 
 <template>
-    <PostPlaceInputComponent :submitFunc="submitAddPlace" :disabledButton="loading" />
+    <div v-if="categoryLoading">
+        <LoadingComponent />
+    </div>
+    <div v-if="!categoryLoading">
+        <PostPlaceInputComponent :submitFunc="submitAddPlace" :disabledButton="loading"
+            :categories="categories?.getMyPostCategories" />
+    </div>
 </template>

@@ -5,6 +5,7 @@ import { editPostCategoryMutationDocument, getMyPostCategoryByIdQueryDocument } 
 const props = defineProps({
     categoryId: {
         type: String,
+        required: true
     },
 })
 
@@ -25,7 +26,7 @@ const submitEditCategory = async (submitData: PostCategoryInputForm) => {
         displayOrder = parseInt(submitData.displayOrder ?? "")
     }
     const variables: EditPostCategoryMutationVariables = {
-        id: props.categoryId ?? "",
+        id: props.categoryId,
         name: submitData.name ?? "",
         parentCategoryId: submitData.parentCategoryId ?? null,
         displayOrder: displayOrder,

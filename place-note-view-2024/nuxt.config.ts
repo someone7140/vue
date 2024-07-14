@@ -2,7 +2,12 @@ import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  app: {
+    head: {
+      title: "Placeノート",
+    },
+  },
+  devtools: { enabled: process.env.ENABLE_DEVTOOL === "true" },
   build: {
     transpile: ["vuetify"],
   },

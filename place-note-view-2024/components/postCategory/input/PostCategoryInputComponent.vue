@@ -22,7 +22,7 @@ const postCategoryInputFormState = ref<PostCategoryInputForm>(props.postCategory
     parentCategoryId: props.postCategory.parentCategoryId ?? undefined,
     displayOrder: props.postCategory.displayOrder?.toString() ?? undefined,
     memo: props.postCategory.memo ?? undefined,
-} : {})
+} : { valid: false })
 
 const { requiredValidation, numberValidation } = commonInput()
 

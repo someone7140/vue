@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { GetMyPostCategoriesQuery } from '~/gql/graphql';
-import { getMyPostCategoriesQueryDocument } from '~/query/postCategoryQuery';
+import type { PostCategoryResponse, PostPlaceResponse } from '~/gql/graphql';
 
 const props = defineProps({
     submitFunc: {
@@ -11,14 +10,23 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+    categories: {
+        type: Array as () => Array<PostCategoryResponse>,
+        default: []
+    },
+    postPlace: {
+        type: Object as () => PostPlaceResponse,
+        default: undefined
+    }
 })
-const postPlaceInputFormState = ref<PostPlaceInputForm>({
+const postPlaceInputFormState = ref<PostPlaceInputForm>(props.postPlace ? {
     valid: false,
-})
-const { result: categories } = useQuery<GetMyPostCategoriesQuery>(getMyPostCategoriesQueryDocument, {
-    errorPolicy: 'all',
-    nameFilter: null
-}, { fetchPolicy: 'network-only', })
+    name: props.postPlace.name,
+    address: props.postPlace.address ?? undefined,
+    categoryIdList: props.postPlace.categoryIdList ?? [],
+    detail: props.postPlace.detail ?? undefined,
+    urlList: props.postPlace.urlList ?? [],
+} : { valid: false })
 
 const { requiredValidation } = commonInput()
 
@@ -29,7 +37,7 @@ const submitPlace = () => {
 }
 
 const listPageTransfer = () => {
-    navigateTo(`/postCategory/list`)
+    navigateTo(`/postPlace/list`)
 }
 
 const updateCategoryIds = (categoryIdList: string[]) => {
@@ -52,15 +60,15 @@ const updateCategoryIds = (categoryIdList: string[]) => {
                 </template>
             </v-text-field>
             <div class="mb-1">カテゴリー設定</div>
-            <div v-if="categories?.getMyPostCategories && categories.getMyPostCategories.length > 0">
-                <PostCategorySelectDialogComponent :categories="categories.getMyPostCategories"
+            <div v-if="categories.length > 0">
+                <PostCategorySelectDialogComponent :categories="categories"
                     :checkedCategoryIds="postPlaceInputFormState.categoryIdList"
                     :updateCategoryIdsFunc="updateCategoryIds" />
                 <div>
                     <v-list lines="one" max-width="500px">
                         <v-list-item v-for="categoryId in postPlaceInputFormState.categoryIdList" :key="categoryId"
                             class="text-pre-wrap" style="-webkit-line-clamp:10; overflow-wrap:anywhere">
-                            {{ categories?.getMyPostCategories.find(c => c.id === categoryId)?.name }}
+                            {{ categories.find(c => c.id === categoryId)?.name }}
                         </v-list-item>
                     </v-list>
                 </div>
@@ -71,7 +79,7 @@ const updateCategoryIds = (categoryIdList: string[]) => {
             <v-textarea label="詳細" rows="3" v-model="postPlaceInputFormState.detail" />
             <div class="d-flex justify-center">
                 <v-btn type="submit" class="bg-light-blue-darken-1 text-black" @disabled="props.disabledButton">
-                    登録
+                    {{ postPlace ? "編集" : "登録" }}
                 </v-btn>
                 <v-btn class="bg-blue-grey-lighten-4 text-black ml-6" @click="listPageTransfer">
                     一覧へ

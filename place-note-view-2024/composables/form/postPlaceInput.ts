@@ -1,5 +1,3 @@
-import type { LatLon } from "~/gql/graphql";
-
 export interface PostPlaceInputForm {
   valid?: boolean;
   name?: string;

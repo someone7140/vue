@@ -10,7 +10,7 @@ const loginState = useLoginState();
 
 <template>
   <div v-if="loginState != null && !!categoryId">
-    <div class="mb-3">カテゴリー編集</div>
+    <div class="mb-3">カテゴリーの編集</div>
     <PostCategoryEditComponent :categoryId="categoryId" />
   </div>
 </template>

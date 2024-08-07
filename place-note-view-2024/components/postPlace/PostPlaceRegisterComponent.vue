@@ -1,7 +1,15 @@
 <script setup lang="ts">
+import { POST_PLACE_ADD_AFTER_PAGE, type PostPlaceAddAfterPage } from '~/components/postPlace/const/postPlaceConst';
 import type { AddPostPlaceMutation, AddPostPlaceMutationVariables, GetMyPostCategoriesQuery, LatLonInput } from '~/gql/graphql';
 import { getMyPostCategoriesQueryDocument } from '~/query/postCategoryQuery';
 import { addPostPlaceMutationDocument } from '~/query/postPlaceQuery';
+
+const props = defineProps({
+    afterPage: {
+        type: Object as () => PostPlaceAddAfterPage,
+        default: POST_PLACE_ADD_AFTER_PAGE.PlaceList
+    },
+})
 
 const { mutate: addPostPlaceMutate } = useMutation<AddPostPlaceMutation>(addPostPlaceMutationDocument, {
     errorPolicy: 'all',
@@ -50,7 +58,9 @@ const submitAddPlace = async (submitData: PostPlaceInputForm) => {
             message: "場所を登録しました。",
             active: true
         }
-        navigateTo(`/postPlace/list`)
+        props.afterPage === POST_PLACE_ADD_AFTER_PAGE.AddPost ?
+            navigateTo(`/post/add?placeId=${result}`)
+            : navigateTo(`/postPlace/list`)
     } else {
         snackbarState.value = {
             type: "error",

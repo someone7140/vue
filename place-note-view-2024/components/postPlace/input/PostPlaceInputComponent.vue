@@ -73,7 +73,7 @@ const updateCategoryIds = (categoryIdList: string[]) => {
                     </v-list>
                 </div>
             </div>
-            <div v-else>
+            <div class="mb-2" v-else>
                 登録されているカテゴリーはありません
             </div>
             <v-textarea label="詳細" rows="3" v-model="postPlaceInputFormState.detail" />

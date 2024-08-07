@@ -14,7 +14,12 @@ const { result: categories, loading: getMyPostCategoriesLoading, refetch: refetc
         <LoadingComponent />
     </div>
     <div v-if="!getMyPostCategoriesLoading">
-        <PostCategoryDisplayComponent :categories="categories?.getMyPostCategories" :displayActionButton="true"
-            :refetchCategoryFunc="refetchCategories" />
+        <div v-if="categories?.getMyPostCategories && categories?.getMyPostCategories.length > 0">
+            <PostCategoryDisplayComponent :categories="categories?.getMyPostCategories" :displayActionButton="true"
+                :refetchCategoryFunc="refetchCategories" />
+        </div>
+        <div v-else>
+            登録されているカテゴリーはありません
+        </div>
     </div>
 </template>

@@ -32,11 +32,20 @@ export const getLatLonFromAddressQueryDocument = gql`
 `;
 
 export const getPostPlacesAndCategoriesQueryDocument = gql`
-  query GetPostPlacesAndCategories($idFilter: String, $categoryFilter: String) {
-    getPostPlaces(idFilter: $idFilter, categoryFilter: $categoryFilter) {
+  query GetPostPlacesAndCategories(
+    $idFilter: String
+    $categoryFilter: String
+    $nameFilter: String
+  ) {
+    getPostPlaces(
+      idFilter: $idFilter
+      categoryFilter: $categoryFilter
+      nameFilter: $nameFilter
+    ) {
       id
       name
       userSettingId
+      address
       latLon {
         lat
         lon

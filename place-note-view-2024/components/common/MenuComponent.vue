@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { POST_PLACE_ADD_AFTER_PAGE } from '~/components/postPlace/const/postPlaceConst';
+
 const loginState = useLoginState();
 const snackbarState = useSnackbarState();
 
@@ -51,7 +53,12 @@ const placeList = {
 
 const placeAdd = {
   title: "場所追加",
-  href: "/postPlace/add",
+  href: `/postPlace/add?addAfter=${POST_PLACE_ADD_AFTER_PAGE.PlaceList}`,
+}
+
+const postAdd = {
+  title: "投稿追加",
+  href: "/post/add_select",
 }
 
 const notLoginMenuList = [
@@ -70,6 +77,11 @@ const loginMenuList = [
   {
     title: "場所管理", child: [
       placeList, placeAdd
+    ],
+  },
+  {
+    title: "投稿管理", child: [
+      postAdd
     ],
   },
   logoutMenu

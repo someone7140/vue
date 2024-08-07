@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { EditPostCategoryMutationVariables, EditPostPlaceMutation, EditPostPlaceMutationVariables, GetMyPostCategoryByIdQuery, GetPostPlacesAndCategoriesQuery, LatLonInput } from '~/gql/graphql';
+import type { EditPostPlaceMutation, EditPostPlaceMutationVariables, GetPostPlacesAndCategoriesQuery, LatLonInput } from '~/gql/graphql';
 import { editPostPlaceMutationDocument, getPostPlacesAndCategoriesQueryDocument } from '~/query/postPlaceQuery';
 
 const props = defineProps({

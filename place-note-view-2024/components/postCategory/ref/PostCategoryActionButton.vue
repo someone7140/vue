@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { PostCategoryResponse } from '~/gql/graphql';
+import type { PostCategoryObjFragment } from '~/gql/graphql';
 
 const props = defineProps({
     postCategory: {
-        type: Object as () => PostCategoryResponse,
+        type: Object as () => PostCategoryObjFragment,
         default: undefined
     },
     refetchExec: {

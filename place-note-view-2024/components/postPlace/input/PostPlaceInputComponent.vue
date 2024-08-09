@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PostCategoryResponse, PostPlaceResponse } from '~/gql/graphql';
+import type { PostCategoryObjFragment, PostPlaceResponse } from '~/gql/graphql';
 
 const props = defineProps({
     submitFunc: {
@@ -11,7 +11,7 @@ const props = defineProps({
         default: false
     },
     categories: {
-        type: Array as () => Array<PostCategoryResponse>,
+        type: Array as () => Array<PostCategoryObjFragment>,
         default: []
     },
     postPlace: {
@@ -19,13 +19,14 @@ const props = defineProps({
         default: undefined
     }
 })
+
 const postPlaceInputFormState = ref<PostPlaceInputForm>(props.postPlace ? {
     valid: false,
     name: props.postPlace.name,
     address: props.postPlace.address ?? undefined,
     categoryIdList: props.postPlace.categoryIdList ?? [],
     detail: props.postPlace.detail ?? undefined,
-    urlList: props.postPlace.urlList ?? [],
+    url: props.postPlace.url ?? undefined,
 } : { valid: false })
 
 const { requiredValidation } = commonInput()
@@ -76,6 +77,11 @@ const updateCategoryIds = (categoryIdList: string[]) => {
             <div class="mb-2" v-else>
                 登録されているカテゴリーはありません
             </div>
+            <v-text-field v-model="postPlaceInputFormState.url">
+                <template v-slot:label>
+                    参考URL
+                </template>
+            </v-text-field>
             <v-textarea label="詳細" rows="3" v-model="postPlaceInputFormState.detail" />
             <div class="d-flex justify-center">
                 <v-btn type="submit" class="bg-light-blue-darken-1 text-black" @disabled="props.disabledButton">

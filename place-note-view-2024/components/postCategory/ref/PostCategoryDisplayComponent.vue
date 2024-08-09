@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { PostCategoryResponse } from '~/gql/graphql';
+import type { PostCategoryObjFragment } from '~/gql/graphql';
 
 const props = defineProps({
     categories: {
-        type: Array as () => Array<PostCategoryResponse>,
+        type: Array as () => Array<PostCategoryObjFragment>,
         default: []
     },
     displayActionButton: {
@@ -28,7 +28,7 @@ const props = defineProps({
     },
 })
 
-const getRootCategoryList = (categoryList: PostCategoryResponse[]) => {
+const getRootCategoryList = (categoryList: PostCategoryObjFragment[]) => {
     return (
         categoryList.filter(
             (child) => !categoryList.some((parent) => child.parentCategoryId === parent.id)
@@ -36,7 +36,7 @@ const getRootCategoryList = (categoryList: PostCategoryResponse[]) => {
     );
 }
 
-const getChildrenCategory = (categoryList: PostCategoryResponse[], parentId: string) => {
+const getChildrenCategory = (categoryList: PostCategoryObjFragment[], parentId: string) => {
     return categoryList.filter((child) => child.parentCategoryId === parentId);
 }
 

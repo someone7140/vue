@@ -4,5 +4,5 @@ export interface PostPlaceInputForm {
   address?: string;
   categoryIdList?: string[];
   detail?: string;
-  urlList?: string[];
+  url?: string;
 }

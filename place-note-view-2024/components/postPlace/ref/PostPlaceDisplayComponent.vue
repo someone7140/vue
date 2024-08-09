@@ -54,7 +54,12 @@ watch(placesAndCategories, (newVal) => {
             <v-list lines="two" max-width="500px" v-if="(placesAndCategories?.getPostPlaces ?? []).length > 0">
                 <v-list-item v-for="place in placesAndCategories?.getPostPlaces ?? []" :key="place.id">
                     <v-list-item-tile>
-                        <div class="text-h5 text-wrap">{{ place.name }}</div>
+                        <a v-if="place.url" :href="place.url ?? ''" target="_blank">
+                            <div class="text-h5 text-wrap">{{
+                                place.name }}
+                            </div>
+                        </a>
+                        <div v-else class="text-h5 text-wrap">{{ place.name }}</div>
                     </v-list-item-tile>
                     <v-list-item-subtitle class="text-pre-wrap ml-4"
                         style="-webkit-line-clamp:10; overflow-wrap:anywhere">

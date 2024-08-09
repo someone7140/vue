@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getMyPostCategoriesQueryDocument } from '~/query/postCategoryQuery';
-import type { GetMyPostCategoriesQuery, PostCategoryResponse } from '~/gql/graphql';
+import type { GetMyPostCategoriesQuery, PostCategoryObjFragment } from '~/gql/graphql';
 
 const props = defineProps({
     submitFunc: {
@@ -12,7 +12,7 @@ const props = defineProps({
         default: false
     },
     postCategory: {
-        type: Object as () => PostCategoryResponse,
+        type: Object as () => PostCategoryObjFragment,
         default: undefined
     }
 })

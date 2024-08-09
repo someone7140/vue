@@ -42,7 +42,7 @@ type Mutation {
     prefectureCode: String
     categoryIdList: [String!]!
     detail: String
-    urlList: [String!]!
+    url: String
   ): String!
   editPostPlace(
     id: String!
@@ -52,7 +52,7 @@ type Mutation {
     prefectureCode: String
     categoryIdList: [String!]!
     detail: String
-    urlList: [String!]!
+    url: String
   ): Boolean!
   deletePostPlace(id: String!): Boolean!
   addPost(
@@ -104,5 +104,5 @@ type PostPlaceResponse {
   prefectureCode: String
   categoryIdList: [String!]!
   detail: String
-  urlList: [String!]!
+  url: String
 }

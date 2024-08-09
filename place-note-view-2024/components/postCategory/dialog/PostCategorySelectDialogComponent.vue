@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { PostCategoryResponse } from '~/gql/graphql';
+import type { PostCategoryObjFragment } from '~/gql/graphql';
 
 const props = defineProps({
     categories: {
-        type: Array as () => Array<PostCategoryResponse>,
+        type: Array as () => Array<PostCategoryObjFragment>,
         default: []
     },
     checkedCategoryIds: {

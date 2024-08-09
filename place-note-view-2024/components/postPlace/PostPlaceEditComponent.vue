@@ -45,7 +45,7 @@ const submitEditPlace = async (submitData: PostPlaceInputForm) => {
         address: submitData.address ?? null,
         categoryIdList: submitData.categoryIdList ?? [],
         detail: submitData.detail ?? null,
-        urlList: submitData.urlList ?? [],
+        url: submitData.url,
         latLon: latLon ?? null,
         prefectureCode: prefectureCode ?? null
     }

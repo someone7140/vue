@@ -1,27 +1,30 @@
 import { gql } from "@apollo/client/core";
 
+export const categoryResponseFragment = gql`
+  fragment PostCategoryObj on PostCategoryResponse {
+    id
+    userSettingId
+    name
+    parentCategoryId
+    displayOrder
+    memo
+  }
+`;
+
 export const getMyPostCategoriesQueryDocument = gql`
+  ${categoryResponseFragment}
   query GetMyPostCategories($nameFilter: String) {
     getMyPostCategories(nameFilter: $nameFilter) {
-      id
-      userSettingId
-      name
-      parentCategoryId
-      displayOrder
-      memo
+      ...PostCategoryObj
     }
   }
 `;
 
 export const getMyPostCategoryByIdQueryDocument = gql`
+  ${categoryResponseFragment}
   query GetMyPostCategoryById($idFilter: String!) {
     getMyPostCategoryById(idFilter: $idFilter) {
-      id
-      userSettingId
-      name
-      parentCategoryId
-      displayOrder
-      memo
+      ...PostCategoryObj
     }
   }
 `;

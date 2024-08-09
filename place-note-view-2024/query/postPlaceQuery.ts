@@ -1,5 +1,7 @@
 import { gql } from "@apollo/client/core";
 
+import { categoryResponseFragment } from "~/query//postCategoryQuery";
+
 export const addPostPlaceMutationDocument = gql`
   mutation AddPostPlace(
     $name: String!
@@ -8,7 +10,7 @@ export const addPostPlaceMutationDocument = gql`
     $prefectureCode: String
     $categoryIdList: [String!]!
     $detail: String
-    $urlList: [String!]!
+    $url: String
   ) {
     addPostPlace(
       name: $name
@@ -17,7 +19,7 @@ export const addPostPlaceMutationDocument = gql`
       prefectureCode: $prefectureCode
       categoryIdList: $categoryIdList
       detail: $detail
-      urlList: $urlList
+      url: $url
     )
   }
 `;
@@ -32,6 +34,7 @@ export const getLatLonFromAddressQueryDocument = gql`
 `;
 
 export const getPostPlacesAndCategoriesQueryDocument = gql`
+  ${categoryResponseFragment}
   query GetPostPlacesAndCategories(
     $idFilter: String
     $categoryFilter: String
@@ -53,15 +56,10 @@ export const getPostPlacesAndCategoriesQueryDocument = gql`
       prefectureCode
       categoryIdList
       detail
-      urlList
+      url
     }
     getMyPostCategories {
-      id
-      userSettingId
-      name
-      parentCategoryId
-      displayOrder
-      memo
+      ...PostCategoryObj
     }
   }
 `;
@@ -75,7 +73,7 @@ export const editPostPlaceMutationDocument = gql`
     $prefectureCode: String
     $categoryIdList: [String!]!
     $detail: String
-    $urlList: [String!]!
+    $url: String
   ) {
     editPostPlace(
       id: $id
@@ -85,7 +83,7 @@ export const editPostPlaceMutationDocument = gql`
       prefectureCode: $prefectureCode
       categoryIdList: $categoryIdList
       detail: $detail
-      urlList: $urlList
+      url: $url
     )
   }
 `;

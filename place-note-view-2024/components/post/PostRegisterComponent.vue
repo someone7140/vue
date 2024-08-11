@@ -35,14 +35,14 @@ const submitAddPost = async (submitData: PostInputForm) => {
     if (result) {
         snackbarState.value = {
             type: "info",
-            message: "場所を登録しました。",
+            message: "投稿を登録しました。",
             active: true
         }
         navigateTo(`/postCategory/list`)
     } else {
         snackbarState.value = {
             type: "error",
-            message: "カテゴリーの登録に失敗しました。",
+            message: "投稿の登録に失敗しました。",
             active: true
         }
     }
@@ -73,7 +73,7 @@ const selectPlaceTransfer = () => {
                 placeId: props.placeId,
                 isOpen: false,
                 categoryIdList: placeAndCategoryResult?.getPostPlaces[0].categoryIdList,
-                visitedDate: new Date()
+                visitedDate: new Date(new Date().toDateString())
             }" :editFlag="false" />
     </div>
     <div v-else>

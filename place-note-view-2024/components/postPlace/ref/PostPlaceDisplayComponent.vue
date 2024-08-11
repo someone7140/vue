@@ -51,7 +51,7 @@ watch(placesAndCategories, (newVal) => {
                     </v-btn>
                 </div>
             </div>
-            <v-list lines="two" max-width="500px" v-if="(placesAndCategories?.getPostPlaces ?? []).length > 0">
+            <v-list lines="two" max-width="350px" v-if="(placesAndCategories?.getPostPlaces ?? []).length > 0">
                 <v-list-item v-for="place in placesAndCategories?.getPostPlaces ?? []" :key="place.id">
                     <v-list-item-tile>
                         <a v-if="place.url" :href="place.url ?? ''" target="_blank">

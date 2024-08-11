@@ -39,12 +39,13 @@ const postInputFormState = ref<PostInputForm>(props.initialInput ? {
     urlList: props.initialInput.urlList ?? [""],
 } : { valid: false })
 
+const visitedDateCalendarDisplay = ref(false)
+
 const { requiredValidation } = commonInput()
 
 const submitPost = () => {
     if (postInputFormState.value.valid) {
-        console.log(postInputFormState.value)
-        // props.submitFunc(postInputFormState.value)
+        props.submitFunc(postInputFormState.value)
     }
 }
 
@@ -56,7 +57,13 @@ const listPageTransfer = () => {
     navigateTo(`/postPlace/list`)
 }
 
-const visitedDateCalendarDisplay = ref(false)
+const addUrlList = () => {
+    postInputFormState.value.urlList = [...(postInputFormState.value.urlList ?? []), ""]
+}
+
+const deleteUrlList = (index: number) => {
+    postInputFormState.value.urlList = postInputFormState.value.urlList?.filter((_, i) => i != index) ?? []
+}
 
 </script>
 
@@ -98,29 +105,42 @@ const visitedDateCalendarDisplay = ref(false)
                 <PostCategorySelectDialogComponent :categories="categories"
                     :checkedCategoryIds="postInputFormState.categoryIdList"
                     :updateCategoryIdsFunc="updateCategoryIds" />
-                <div>
-                    <v-list lines="one" max-width="500px">
-                        <v-list-item v-for="categoryId in postInputFormState.categoryIdList" :key="categoryId"
-                            class="text-pre-wrap" style="-webkit-line-clamp:10; overflow-wrap:anywhere">
-                            {{ categories.find(c => c.id === categoryId)?.name }}
-                        </v-list-item>
-                    </v-list>
+                <div class="mb-4 mt-3 ml-2">
+                    <div class="text-pre-wrap" v-for="categoryId in postInputFormState.categoryIdList" :key="categoryId"
+                        style="-webkit-line-clamp:10; overflow-wrap:anywhere">
+                        {{ categories.find(c => c.id === categoryId)?.name }}
+                    </div>
                 </div>
             </div>
             <div class="mb-2" v-else>
                 登録されているカテゴリーはありません
             </div>
-            <div class="d-flex align-center ga-2">
+            <div class="d-flex align-center ga-3 mb-3">
                 <div>
                     URL
+                </div>
+                <div>
+                    <v-btn class="bg-indigo-lighten-3 text-black" @click="addUrlList">
+                        追加
+                    </v-btn>
                 </div>
                 <div>
                     <v-icon>mdi-information-outline</v-icon>
                     <v-tooltip activator="parent" location="top">SNSやブログで投稿したURLを入力</v-tooltip>
                 </div>
             </div>
+            <div v-for="(url, index) in postInputFormState.urlList" :key="index">
+                <div class="d-flex align-center ga-4">
+                    <v-text-field v-model="postInputFormState.urlList![index]"></v-text-field>
+                    <div class="mb-3">
+                        <v-btn class="bg-blue-grey-lighten-4 text-black" @click="deleteUrlList(index)">
+                            削除
+                        </v-btn>
+                    </div>
+                </div>
+            </div>
             <v-textarea label="詳細" rows="3" v-model="postInputFormState.detail" />
-            <div class="d-flex justify-center">
+            <div class="d-flex justify-center mb-3">
                 <v-btn type="submit" class="bg-light-blue-darken-1 text-black" @disabled="props.disabledButton">
                     {{ props.editFlag ? "編集" : "登録" }}
                 </v-btn>

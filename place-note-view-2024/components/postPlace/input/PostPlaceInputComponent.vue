@@ -65,13 +65,11 @@ const updateCategoryIds = (categoryIdList: string[]) => {
                 <PostCategorySelectDialogComponent :categories="categories"
                     :checkedCategoryIds="postPlaceInputFormState.categoryIdList"
                     :updateCategoryIdsFunc="updateCategoryIds" />
-                <div>
-                    <v-list lines="one" max-width="500px">
-                        <v-list-item v-for="categoryId in postPlaceInputFormState.categoryIdList" :key="categoryId"
-                            class="text-pre-wrap" style="-webkit-line-clamp:10; overflow-wrap:anywhere">
-                            {{ categories.find(c => c.id === categoryId)?.name }}
-                        </v-list-item>
-                    </v-list>
+                <div class="mb-4 mt-3 ml-2">
+                    <div class="text-pre-wrap" v-for="categoryId in postPlaceInputFormState.categoryIdList"
+                        :key="categoryId" style="-webkit-line-clamp:10; overflow-wrap:anywhere">
+                        {{ categories.find(c => c.id === categoryId)?.name }}
+                    </div>
                 </div>
             </div>
             <div class="mb-2" v-else>

@@ -15,7 +15,7 @@ const changeMenuDisplay = () => {
     </template>
     <v-app-bar-title>Placeノート</v-app-bar-title>
     <div v-if="loginState != null" class="mr-2">
-      <v-icon icon="mdi-account"></v-icon>
+      <v-icon size="x-large">mdi-account</v-icon>
     </div>
     <div v-else></div>
   </v-app-bar>

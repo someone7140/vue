@@ -60,9 +60,10 @@ const selectPlaceTransfer = () => {
     </div>
     <div v-if="placeAndCategoryResult?.getPostPlaces && placeAndCategoryResult.getPostPlaces.length > 0">
         <div class="d-flex justify-center ga-5 mt-2 mb-4">
-            <div class="mt-1">「{{ placeAndCategoryResult?.getPostPlaces[0].name }}」で投稿
-            </div>
-            <div><v-btn class="bg-light-green-lighten-4 text-black mr-4" @click="selectPlaceTransfer">
+            <v-sheet class="text-pre-wrap" max-width="250px">
+                「{{ placeAndCategoryResult?.getPostPlaces[0].name }}」で投稿
+            </v-sheet>
+            <div><v-btn class=" bg-light-green-lighten-4 text-black mr-4" @click="selectPlaceTransfer">
                     場所を変更
                 </v-btn>
             </div>

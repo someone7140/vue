@@ -61,6 +61,11 @@ const postAdd = {
   href: "/post/add_select",
 }
 
+const myPostList = {
+  title: "登録した投稿一覧",
+  href: "/post/my_post_list",
+}
+
 const notLoginMenuList = [
   topMenu,
   loginMenu,
@@ -81,7 +86,7 @@ const loginMenuList = [
   },
   {
     title: "投稿管理", child: [
-      postAdd
+      postAdd, myPostList
     ],
   },
   logoutMenu

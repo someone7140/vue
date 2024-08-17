@@ -83,5 +83,17 @@ export const useGeolocationService = () => {
       prefectureCode,
     };
   };
-  return { getAddressInfo };
+
+  // 都道府県コードと名前のリスト
+  const prefectureMap = new Map(
+    Object.entries(MUNI_LIST.MUNI_ARRAY).map(([key, value]) => {
+      // muniCdから都道府県コードを取得
+      const code = key.length > 4 ? key.substring(0, 2) : key.substring(0, 1);
+      // カンマ区切りの二つ目から都道府県の名前を取得
+      const name = value.split(",")[1];
+      return [code, name];
+    })
+  );
+
+  return { getAddressInfo, prefectureMap };
 };

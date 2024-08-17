@@ -29,6 +29,8 @@ const documents = {
     "\n  mutation EditPostPlace(\n    $id: String!\n    $name: String!\n    $address: String\n    $latLon: LatLonInput\n    $prefectureCode: String\n    $categoryIdList: [String!]!\n    $detail: String\n    $url: String\n  ) {\n    editPostPlace(\n      id: $id\n      name: $name\n      address: $address\n      latLon: $latLon\n      prefectureCode: $prefectureCode\n      categoryIdList: $categoryIdList\n      detail: $detail\n      url: $url\n    )\n  }\n": types.EditPostPlaceDocument,
     "\n  mutation DeletePostPlace($id: String!) {\n    deletePostPlace(id: $id)\n  }\n": types.DeletePostPlaceDocument,
     "\n  mutation AddPost(\n    $title: String!\n    $placeId: String!\n    $visitedDate: DateTime!\n    $isOpen: Boolean!\n    $categoryIdList: [String!]!\n    $detail: String\n    $urlList: [String!]!\n  ) {\n    addPost(\n      title: $title\n      placeId: $placeId\n      visitedDate: $visitedDate\n      isOpen: $isOpen\n      categoryIdList: $categoryIdList\n      detail: $detail\n      urlList: $urlList\n    )\n  }\n": types.AddPostDocument,
+    "\n  fragment MyPostObj on PostResponse {\n    id\n    userSettingId\n    title\n    placeId\n    placeName\n    placeUrl\n    placePrefectureCode\n    visitedDate\n    isOpen\n    categoryIdList\n    detail\n    urlList {\n      urlId\n      url\n      urlType\n      urlInfo {\n        title\n        imageUrl\n        siteName\n      }\n    }\n  }\n": types.MyPostObjFragmentDoc,
+    "\n  \n  \n  query GetMyPosts($idFilter: String) {\n    getMyPosts(idFilter: $idFilter) {\n      ...MyPostObj\n    }\n    getMyPostCategories {\n      ...PostCategoryObj\n    }\n  }\n": types.GetMyPostsDocument,
 };
 
 /**
@@ -109,6 +111,14 @@ export function graphql(source: "\n  mutation DeletePostPlace($id: String!) {\n 
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation AddPost(\n    $title: String!\n    $placeId: String!\n    $visitedDate: DateTime!\n    $isOpen: Boolean!\n    $categoryIdList: [String!]!\n    $detail: String\n    $urlList: [String!]!\n  ) {\n    addPost(\n      title: $title\n      placeId: $placeId\n      visitedDate: $visitedDate\n      isOpen: $isOpen\n      categoryIdList: $categoryIdList\n      detail: $detail\n      urlList: $urlList\n    )\n  }\n"): (typeof documents)["\n  mutation AddPost(\n    $title: String!\n    $placeId: String!\n    $visitedDate: DateTime!\n    $isOpen: Boolean!\n    $categoryIdList: [String!]!\n    $detail: String\n    $urlList: [String!]!\n  ) {\n    addPost(\n      title: $title\n      placeId: $placeId\n      visitedDate: $visitedDate\n      isOpen: $isOpen\n      categoryIdList: $categoryIdList\n      detail: $detail\n      urlList: $urlList\n    )\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  fragment MyPostObj on PostResponse {\n    id\n    userSettingId\n    title\n    placeId\n    placeName\n    placeUrl\n    placePrefectureCode\n    visitedDate\n    isOpen\n    categoryIdList\n    detail\n    urlList {\n      urlId\n      url\n      urlType\n      urlInfo {\n        title\n        imageUrl\n        siteName\n      }\n    }\n  }\n"): (typeof documents)["\n  fragment MyPostObj on PostResponse {\n    id\n    userSettingId\n    title\n    placeId\n    placeName\n    placeUrl\n    placePrefectureCode\n    visitedDate\n    isOpen\n    categoryIdList\n    detail\n    urlList {\n      urlId\n      url\n      urlType\n      urlInfo {\n        title\n        imageUrl\n        siteName\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  \n  \n  query GetMyPosts($idFilter: String) {\n    getMyPosts(idFilter: $idFilter) {\n      ...MyPostObj\n    }\n    getMyPostCategories {\n      ...PostCategoryObj\n    }\n  }\n"): (typeof documents)["\n  \n  \n  query GetMyPosts($idFilter: String) {\n    getMyPosts(idFilter: $idFilter) {\n      ...MyPostObj\n    }\n    getMyPostCategories {\n      ...PostCategoryObj\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

@@ -1,5 +1,7 @@
 import { gql } from "@apollo/client/core";
 
+import { categoryResponseFragment } from "~/query/postCategoryQuery";
+
 export const addPostMutationDocument = gql`
   mutation AddPost(
     $title: String!
@@ -19,5 +21,44 @@ export const addPostMutationDocument = gql`
       detail: $detail
       urlList: $urlList
     )
+  }
+`;
+
+export const postResponseFragment = gql`
+  fragment MyPostObj on PostResponse {
+    id
+    userSettingId
+    title
+    placeId
+    placeName
+    placeUrl
+    placePrefectureCode
+    visitedDate
+    isOpen
+    categoryIdList
+    detail
+    urlList {
+      urlId
+      url
+      urlType
+      urlInfo {
+        title
+        imageUrl
+        siteName
+      }
+    }
+  }
+`;
+
+export const getMyPostsQueryDocument = gql`
+  ${categoryResponseFragment}
+  ${postResponseFragment}
+  query GetMyPosts($idFilter: String) {
+    getMyPosts(idFilter: $idFilter) {
+      ...MyPostObj
+    }
+    getMyPostCategories {
+      ...PostCategoryObj
+    }
   }
 `;

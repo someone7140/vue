@@ -42,6 +42,7 @@ const postInputFormState = ref<PostInputForm>(props.initialInput ? {
 const visitedDateCalendarDisplay = ref(false)
 
 const { requiredValidation } = commonInput()
+const { getDisplayDate } = useCommonUtil()
 
 const submitPost = () => {
     if (postInputFormState.value.valid) {
@@ -92,10 +93,7 @@ const deleteUrlList = (index: number) => {
                     </v-dialog>
                 </v-btn>
                 <div>
-                    {{ postInputFormState.visitedDate?.toLocaleDateString("ja-JP", {
-                        year: "numeric", month: "2-digit",
-                        day: "2-digit"
-                    }) }}
+                    {{ getDisplayDate(postInputFormState.visitedDate) }}
                 </div>
             </div>
             <v-switch v-model="postInputFormState.isOpen" color="primary"

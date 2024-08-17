@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client/core";
 
-import { categoryResponseFragment } from "~/query//postCategoryQuery";
+import { categoryResponseFragment } from "~/query/postCategoryQuery";
 
 export const addPostPlaceMutationDocument = gql`
   mutation AddPostPlace(

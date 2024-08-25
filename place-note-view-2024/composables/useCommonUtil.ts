@@ -7,7 +7,6 @@ export const useCommonUtil = () => {
     if (!dateInput) {
       return "";
     }
-    console.log(typeof dateInput.getDay());
     const weekDay = ["日", "月", "火", "水", "木", "金", "土"];
     return `${dateInput.toLocaleDateString("ja-JP", {
       year: "numeric",

@@ -117,7 +117,7 @@ enum UrlTypeEnum {
 }
 
 type UrlInfo {
-  title: String
+  title: String!
   imageUrl: String
   siteName: String
 }
@@ -127,6 +127,7 @@ type UrlDetail {
   url: String!
   urlType: UrlTypeEnum!
   urlInfo: UrlInfo
+  embedHtml: String
 }
 
 type PostResponse {

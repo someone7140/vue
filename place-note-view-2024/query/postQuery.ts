@@ -46,6 +46,7 @@ export const postResponseFragment = gql`
         imageUrl
         siteName
       }
+      embedHtml
     }
   }
 `;

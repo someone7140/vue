@@ -210,6 +210,7 @@ export type QueryGetPostPlacesArgs = {
 
 export type UrlDetail = {
   __typename?: 'UrlDetail';
+  embedHtml?: Maybe<Scalars['String']['output']>;
   url: Scalars['String']['output'];
   urlId: Scalars['String']['output'];
   urlInfo?: Maybe<UrlInfo>;
@@ -220,7 +221,7 @@ export type UrlInfo = {
   __typename?: 'UrlInfo';
   imageUrl?: Maybe<Scalars['String']['output']>;
   siteName?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
 };
 
 export enum UrlTypeEnum {
@@ -366,14 +367,14 @@ export type AddPostMutationVariables = Exact<{
 
 export type AddPostMutation = { __typename?: 'Mutation', addPost: boolean };
 
-export type MyPostObjFragment = { __typename?: 'PostResponse', id: string, userSettingId: string, title: string, placeId: string, placeName: string, placeUrl?: string | null, placePrefectureCode?: string | null, visitedDate: string, isOpen: boolean, categoryIdList: Array<string>, detail?: string | null, urlList: Array<{ __typename?: 'UrlDetail', urlId: string, url: string, urlType: UrlTypeEnum, urlInfo?: { __typename?: 'UrlInfo', title?: string | null, imageUrl?: string | null, siteName?: string | null } | null }> };
+export type MyPostObjFragment = { __typename?: 'PostResponse', id: string, userSettingId: string, title: string, placeId: string, placeName: string, placeUrl?: string | null, placePrefectureCode?: string | null, visitedDate: string, isOpen: boolean, categoryIdList: Array<string>, detail?: string | null, urlList: Array<{ __typename?: 'UrlDetail', urlId: string, url: string, urlType: UrlTypeEnum, urlInfo?: { __typename?: 'UrlInfo', title: string, imageUrl?: string | null, siteName?: string | null } | null }> };
 
 export type GetMyPostsQueryVariables = Exact<{
   idFilter?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type GetMyPostsQuery = { __typename?: 'Query', getMyPosts: Array<{ __typename?: 'PostResponse', id: string, userSettingId: string, title: string, placeId: string, placeName: string, placeUrl?: string | null, placePrefectureCode?: string | null, visitedDate: string, isOpen: boolean, categoryIdList: Array<string>, detail?: string | null, urlList: Array<{ __typename?: 'UrlDetail', urlId: string, url: string, urlType: UrlTypeEnum, urlInfo?: { __typename?: 'UrlInfo', title?: string | null, imageUrl?: string | null, siteName?: string | null } | null }> }>, getMyPostCategories: Array<{ __typename?: 'PostCategoryResponse', id: string, userSettingId: string, name: string, parentCategoryId?: string | null, displayOrder?: number | null, memo?: string | null }> };
+export type GetMyPostsQuery = { __typename?: 'Query', getMyPosts: Array<{ __typename?: 'PostResponse', id: string, userSettingId: string, title: string, placeId: string, placeName: string, placeUrl?: string | null, placePrefectureCode?: string | null, visitedDate: string, isOpen: boolean, categoryIdList: Array<string>, detail?: string | null, urlList: Array<{ __typename?: 'UrlDetail', urlId: string, url: string, urlType: UrlTypeEnum, urlInfo?: { __typename?: 'UrlInfo', title: string, imageUrl?: string | null, siteName?: string | null } | null }> }>, getMyPostCategories: Array<{ __typename?: 'PostCategoryResponse', id: string, userSettingId: string, name: string, parentCategoryId?: string | null, displayOrder?: number | null, memo?: string | null }> };
 
 export const PostCategoryObjFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PostCategoryObj"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PostCategoryResponse"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userSettingId"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"parentCategoryId"}},{"kind":"Field","name":{"kind":"Name","value":"displayOrder"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}}]} as unknown as DocumentNode<PostCategoryObjFragment, unknown>;
 export const MyPostObjFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"MyPostObj"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PostResponse"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userSettingId"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"placeId"}},{"kind":"Field","name":{"kind":"Name","value":"placeName"}},{"kind":"Field","name":{"kind":"Name","value":"placeUrl"}},{"kind":"Field","name":{"kind":"Name","value":"placePrefectureCode"}},{"kind":"Field","name":{"kind":"Name","value":"visitedDate"}},{"kind":"Field","name":{"kind":"Name","value":"isOpen"}},{"kind":"Field","name":{"kind":"Name","value":"categoryIdList"}},{"kind":"Field","name":{"kind":"Name","value":"detail"}},{"kind":"Field","name":{"kind":"Name","value":"urlList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"urlId"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"urlType"}},{"kind":"Field","name":{"kind":"Name","value":"urlInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"siteName"}}]}}]}}]}}]} as unknown as DocumentNode<MyPostObjFragment, unknown>;

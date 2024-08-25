@@ -20,7 +20,5 @@ const googleAuth = () => {
 </script>
 
 <template>
-  <ClientOnly>
-    <v-btn class="bg-blue-lighten-3" @click="googleAuth" @disabled="props.disabledButton">Googleログイン</v-btn>
-  </ClientOnly>
+  <v-btn class="bg-blue-lighten-3" @click="googleAuth" @disabled="props.disabledButton">Googleログイン</v-btn>
 </template>

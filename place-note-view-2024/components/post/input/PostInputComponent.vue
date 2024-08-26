@@ -42,7 +42,7 @@ const postInputFormState = ref<PostInputForm>(props.initialInput ? {
 const visitedDateCalendarDisplay = ref(false)
 
 const { requiredValidation } = commonInput()
-const { getDisplayDate } = useCommonUtil()
+const { getDisplayDate } = useDisplayUtil()
 
 const submitPost = () => {
     if (postInputFormState.value.valid) {

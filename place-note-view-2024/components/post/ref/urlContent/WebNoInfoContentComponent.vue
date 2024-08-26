@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { UrlDetail } from '~/gql/graphql';
 
 const props = defineProps({
     url: {

@@ -25,7 +25,7 @@ const props = defineProps({
     },
 })
 
-const { getDisplayDate } = useCommonUtil()
+const { getDisplayDate } = useDisplayUtil()
 
 </script>
 

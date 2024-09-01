@@ -35,6 +35,7 @@ const submitUserAccount = async (submitData: UserAccountInputForm) => {
     authToken: googleAuthToken.value?.toString() ?? "",
     userSettingId: submitData.userSettingId ?? "",
     name: submitData.name ?? "",
+    file: submitData.imageFile
   }
   const result = await addAccountUserByGoogleMutate(variables)
   const addUserData = result?.data?.addAccountUserByGoogle

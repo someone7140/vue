@@ -23,11 +23,13 @@ export const addAccountUserByGoogleMutationDocument = gql`
     $authToken: String!
     $userSettingId: String!
     $name: String!
+    $file: Upload
   ) {
     addAccountUserByGoogle(
       authToken: $authToken
       userSettingId: $userSettingId
       name: $name
+      imageFile: $file
     ) {
       token
       userSettingId

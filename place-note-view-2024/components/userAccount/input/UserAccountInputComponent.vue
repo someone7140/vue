@@ -36,9 +36,15 @@ const submitUserAccount = () => {
           名前<span class="text-red"> *</span>
         </template>
       </v-text-field>
-      <v-btn type="submit" class="bg-light-blue-darken-1 text-black" @disabled="props.disabledButton">
-        登録
-      </v-btn>
+      <v-file-input label="アイコン画像" v-model="userAccountInputFormState.imageFile"></v-file-input>
+      <div class="d-flex justify-center ga-2">
+        <v-btn type="submit" class="bg-light-blue-darken-1 text-black" @disabled="props.disabledButton">
+          登録
+        </v-btn>
+        <div v-if="props.disabledButton">
+          <LoadingComponent />
+        </div>
+      </div>
     </v-sheet>
 
   </v-form>

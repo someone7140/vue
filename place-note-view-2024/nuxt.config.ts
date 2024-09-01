@@ -30,6 +30,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       googleClientId: process.env.GOOGLE_CLIENT_ID,
+      apiEndpoint: process.env.API_ENDPOINT,
     },
   },
   components: [

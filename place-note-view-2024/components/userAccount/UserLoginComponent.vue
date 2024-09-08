@@ -13,7 +13,7 @@ const afterGoogleAuthExec = async (code: string) => {
     const verifyResult = await mutate(variables)
     const userData = verifyResult?.data?.loginByGoogleAuthCode
     if (userData) {
-      await authSet(userData.token, userData.userSettingId, userData.name)
+      await authSet(userData.token, userData.userSettingId, userData.name, userData.imageUrl)
       snackbarState.value = {
         type: "info",
         message: "ログインしました",

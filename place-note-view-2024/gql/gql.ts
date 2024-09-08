@@ -14,9 +14,10 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  */
 const documents = {
     "\n  mutation GoogleAuthCodeVerify($authCode: String!) {\n    googleAuthCodeVerify(authCode: $authCode) {\n      token\n    }\n  }\n": types.GoogleAuthCodeVerifyDocument,
-    "\n  mutation LoginByGoogleAuthCode($authCode: String!) {\n    loginByGoogleAuthCode(authCode: $authCode) {\n      token\n      userSettingId\n      name\n    }\n  }\n": types.LoginByGoogleAuthCodeDocument,
-    "\n  mutation AddAccountUserByGoogle(\n    $authToken: String!\n    $userSettingId: String!\n    $name: String!\n    $file: Upload\n  ) {\n    addAccountUserByGoogle(\n      authToken: $authToken\n      userSettingId: $userSettingId\n      name: $name\n      imageFile: $file\n    ) {\n      token\n      userSettingId\n      name\n    }\n  }\n": types.AddAccountUserByGoogleDocument,
-    "\n  query getAccountUserByToken {\n    getAccountUserByToken {\n      token\n      userSettingId\n      name\n    }\n  }\n": types.GetAccountUserByTokenDocument,
+    "\n  mutation LoginByGoogleAuthCode($authCode: String!) {\n    loginByGoogleAuthCode(authCode: $authCode) {\n      token\n      userSettingId\n      name\n      imageUrl\n    }\n  }\n": types.LoginByGoogleAuthCodeDocument,
+    "\n  mutation AddAccountUserByGoogle(\n    $authToken: String!\n    $userSettingId: String!\n    $name: String!\n    $file: Upload\n  ) {\n    addAccountUserByGoogle(\n      authToken: $authToken\n      userSettingId: $userSettingId\n      name: $name\n      imageFile: $file\n    ) {\n      token\n      userSettingId\n      name\n      imageUrl\n    }\n  }\n": types.AddAccountUserByGoogleDocument,
+    "\n  mutation EditAccountUser(\n    $userSettingId: String!\n    $name: String!\n    $file: Upload\n  ) {\n    editAccountUser(\n      userSettingId: $userSettingId\n      name: $name\n      imageFile: $file\n    ) {\n      token\n      userSettingId\n      name\n      imageUrl\n    }\n  }\n": types.EditAccountUserDocument,
+    "\n  query getAccountUserByToken {\n    getAccountUserByToken {\n      token\n      userSettingId\n      name\n      imageUrl\n    }\n  }\n": types.GetAccountUserByTokenDocument,
     "\n  fragment PostCategoryObj on PostCategoryResponse {\n    id\n    userSettingId\n    name\n    parentCategoryId\n    displayOrder\n    memo\n  }\n": types.PostCategoryObjFragmentDoc,
     "\n  \n  query GetMyPostCategories($nameFilter: String) {\n    getMyPostCategories(nameFilter: $nameFilter) {\n      ...PostCategoryObj\n    }\n  }\n": types.GetMyPostCategoriesDocument,
     "\n  \n  query GetMyPostCategoryById($idFilter: String!) {\n    getMyPostCategoryById(idFilter: $idFilter) {\n      ...PostCategoryObj\n    }\n  }\n": types.GetMyPostCategoryByIdDocument,
@@ -54,15 +55,19 @@ export function graphql(source: "\n  mutation GoogleAuthCodeVerify($authCode: St
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation LoginByGoogleAuthCode($authCode: String!) {\n    loginByGoogleAuthCode(authCode: $authCode) {\n      token\n      userSettingId\n      name\n    }\n  }\n"): (typeof documents)["\n  mutation LoginByGoogleAuthCode($authCode: String!) {\n    loginByGoogleAuthCode(authCode: $authCode) {\n      token\n      userSettingId\n      name\n    }\n  }\n"];
+export function graphql(source: "\n  mutation LoginByGoogleAuthCode($authCode: String!) {\n    loginByGoogleAuthCode(authCode: $authCode) {\n      token\n      userSettingId\n      name\n      imageUrl\n    }\n  }\n"): (typeof documents)["\n  mutation LoginByGoogleAuthCode($authCode: String!) {\n    loginByGoogleAuthCode(authCode: $authCode) {\n      token\n      userSettingId\n      name\n      imageUrl\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation AddAccountUserByGoogle(\n    $authToken: String!\n    $userSettingId: String!\n    $name: String!\n    $file: Upload\n  ) {\n    addAccountUserByGoogle(\n      authToken: $authToken\n      userSettingId: $userSettingId\n      name: $name\n      imageFile: $file\n    ) {\n      token\n      userSettingId\n      name\n    }\n  }\n"): (typeof documents)["\n  mutation AddAccountUserByGoogle(\n    $authToken: String!\n    $userSettingId: String!\n    $name: String!\n    $file: Upload\n  ) {\n    addAccountUserByGoogle(\n      authToken: $authToken\n      userSettingId: $userSettingId\n      name: $name\n      imageFile: $file\n    ) {\n      token\n      userSettingId\n      name\n    }\n  }\n"];
+export function graphql(source: "\n  mutation AddAccountUserByGoogle(\n    $authToken: String!\n    $userSettingId: String!\n    $name: String!\n    $file: Upload\n  ) {\n    addAccountUserByGoogle(\n      authToken: $authToken\n      userSettingId: $userSettingId\n      name: $name\n      imageFile: $file\n    ) {\n      token\n      userSettingId\n      name\n      imageUrl\n    }\n  }\n"): (typeof documents)["\n  mutation AddAccountUserByGoogle(\n    $authToken: String!\n    $userSettingId: String!\n    $name: String!\n    $file: Upload\n  ) {\n    addAccountUserByGoogle(\n      authToken: $authToken\n      userSettingId: $userSettingId\n      name: $name\n      imageFile: $file\n    ) {\n      token\n      userSettingId\n      name\n      imageUrl\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query getAccountUserByToken {\n    getAccountUserByToken {\n      token\n      userSettingId\n      name\n    }\n  }\n"): (typeof documents)["\n  query getAccountUserByToken {\n    getAccountUserByToken {\n      token\n      userSettingId\n      name\n    }\n  }\n"];
+export function graphql(source: "\n  mutation EditAccountUser(\n    $userSettingId: String!\n    $name: String!\n    $file: Upload\n  ) {\n    editAccountUser(\n      userSettingId: $userSettingId\n      name: $name\n      imageFile: $file\n    ) {\n      token\n      userSettingId\n      name\n      imageUrl\n    }\n  }\n"): (typeof documents)["\n  mutation EditAccountUser(\n    $userSettingId: String!\n    $name: String!\n    $file: Upload\n  ) {\n    editAccountUser(\n      userSettingId: $userSettingId\n      name: $name\n      imageFile: $file\n    ) {\n      token\n      userSettingId\n      name\n      imageUrl\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query getAccountUserByToken {\n    getAccountUserByToken {\n      token\n      userSettingId\n      name\n      imageUrl\n    }\n  }\n"): (typeof documents)["\n  query getAccountUserByToken {\n    getAccountUserByToken {\n      token\n      userSettingId\n      name\n      imageUrl\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

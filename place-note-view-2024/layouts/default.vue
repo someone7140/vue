@@ -16,7 +16,8 @@ onMounted(async () => {
       try {
         const result = await getAccountUserByTokenLazyQuery();
         if (result) {
-          authSet(authToken, result.getAccountUserByToken.userSettingId, result.getAccountUserByToken.name)
+          const userInfo = result.getAccountUserByToken;
+          authSet(authToken, userInfo.userSettingId, userInfo.name, userInfo.imageUrl)
         }
       } catch (e) {
         authDelete()

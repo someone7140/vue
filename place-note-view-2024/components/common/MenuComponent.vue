@@ -66,6 +66,11 @@ const myPostList = {
   href: "/post/my_post_list",
 }
 
+const userAccountEdit = {
+  title: "ユーザ設定変更",
+  href: "/userAccount/edit",
+}
+
 const notLoginMenuList = [
   topMenu,
   loginMenu,
@@ -87,6 +92,11 @@ const loginMenuList = [
   {
     title: "投稿管理", child: [
       postAdd, myPostList
+    ],
+  },
+  {
+    title: "アカウント設定", child: [
+      userAccountEdit
     ],
   },
   logoutMenu

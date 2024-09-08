@@ -41,7 +41,7 @@ const submitUserAccount = async (submitData: UserAccountInputForm) => {
   const addUserData = result?.data?.addAccountUserByGoogle
 
   if (addUserData) {
-    await authSet(addUserData.token, addUserData.userSettingId, addUserData.name)
+    await authSet(addUserData.token, addUserData.userSettingId, addUserData.name, addUserData.imageUrl)
     snackbarState.value = {
       type: "info",
       message: "ユーザを登録しました",

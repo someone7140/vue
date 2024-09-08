@@ -36,7 +36,7 @@ export default defineNuxtPlugin((app) => {
   // Default httpLink (main communication for apollo) use createUploadLink function from apollo-upload-client
   const httpLink = createUploadLink({
     uri: envVars.public.apiEndpoint,
-    useGETForQueries: true,
+    useGETForQueries: false,
   });
 
   apollo.defaultClient.setLink(

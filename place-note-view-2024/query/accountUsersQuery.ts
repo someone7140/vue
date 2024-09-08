@@ -14,6 +14,7 @@ export const loginByGoogleAuthCodeMutationDocument = gql`
       token
       userSettingId
       name
+      imageUrl
     }
   }
 `;
@@ -34,6 +35,26 @@ export const addAccountUserByGoogleMutationDocument = gql`
       token
       userSettingId
       name
+      imageUrl
+    }
+  }
+`;
+
+export const editAccountUserMutationDocument = gql`
+  mutation EditAccountUser(
+    $userSettingId: String!
+    $name: String!
+    $file: Upload
+  ) {
+    editAccountUser(
+      userSettingId: $userSettingId
+      name: $name
+      imageFile: $file
+    ) {
+      token
+      userSettingId
+      name
+      imageUrl
     }
   }
 `;
@@ -44,6 +65,7 @@ export const getAccountUserByTokenQueryDocument = gql`
       token
       userSettingId
       name
+      imageUrl
     }
   }
 `;

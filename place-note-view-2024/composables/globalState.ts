@@ -15,6 +15,7 @@ export const useSnackbarState = () => {
 export interface UserLoginState {
   userSettingId: string;
   name: string;
+  imageUrl?: string | null;
 }
 
 export const useLoginState = () => {
@@ -26,7 +27,8 @@ export const useLoginState = () => {
 export const authSet = async (
   token: string,
   userSettingId: string,
-  name: string
+  name: string,
+  imageUrl?: string | null
 ) => {
   const loginState = useLoginState();
   const { onLogin } = useApollo();
@@ -35,6 +37,7 @@ export const authSet = async (
   loginState.value = {
     userSettingId: userSettingId,
     name: name,
+    imageUrl: imageUrl,
   };
 };
 

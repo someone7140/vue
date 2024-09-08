@@ -8,10 +8,14 @@ const props = defineProps({
   disabledButton: {
     type: Boolean,
     default: false
+  },
+  initialUserInfo: {
+    type: Object as () => UserLoginState,
+    default: undefined
   }
 })
 
-const userAccountInputFormState = ref<UserAccountInputForm>({})
+const userAccountInputFormState = ref<UserAccountInputForm>(props.initialUserInfo ? { valid: false, userSettingId: props.initialUserInfo.userSettingId, name: props.initialUserInfo.name } : { valid: false })
 const { requiredValidation } = commonInput()
 
 const submitUserAccount = () => {
@@ -36,7 +40,9 @@ const submitUserAccount = () => {
           名前<span class="text-red"> *</span>
         </template>
       </v-text-field>
-      <v-file-input label="アイコン画像" v-model="userAccountInputFormState.imageFile"></v-file-input>
+      <v-file-input label="アイコン画像" v-model="userAccountInputFormState.imageFile" max-width="310px"></v-file-input>
+      <v-img width="70%" aspect-ratio="16/9" :src="initialUserInfo?.imageUrl"
+        v-if="initialUserInfo?.imageUrl && !userAccountInputFormState.imageFile" class="mt-2 mb-2"></v-img>
       <div class="d-flex justify-center ga-2">
         <v-btn type="submit" class="bg-light-blue-darken-1 text-black" @disabled="props.disabledButton">
           登録
